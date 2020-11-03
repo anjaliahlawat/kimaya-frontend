@@ -1,15 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import Router from "./component/RouterComponent";
+import configureStore from './store/configureStore'
 import './sass/App.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-const store = configureStore()
+// const store = configureStore()
 
 function App() {
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
         <Router />
-    </Provider>
+    // </Provider>
   );
 }
 
