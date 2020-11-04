@@ -1,0 +1,23 @@
+@import './navlinks';
+
+.sidebar{
+   .sidebar-header{
+     text-align: center;
+
+     img {
+        width: 100px;
+        height: 70px;
+        margin-top: 10px;
+     }
+   }
+
+   .logout-btn {
+       background: none;
+       border: none;
+       color: $primary-color;
+       position: absolute;
+       bottom: 10px;
+       left: 30px;
+       font-weight: 600;
+   }
+}

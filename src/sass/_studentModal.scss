@@ -1,0 +1,30 @@
+.student-modal{
+    .btn-group{
+       padding: 7px 12px;
+       color: white;
+       border-radius: 20px;
+       font-size: 14px;
+       width: 68px;
+       text-align: center;
+       opacity: 0.8;
+       float: right;
+    }
+    .save{
+       background: $green-color;
+       border: 1px solid $green-color;
+       
+       &:hover{
+          color: $green-color;
+          background: white;
+       }
+    }
+    .cancel{
+      background: $red-color;
+      border: 1px solid $red-color;
+
+      &:hover{
+        color: $red-color;
+        background: white;
+      }
+    }
+}

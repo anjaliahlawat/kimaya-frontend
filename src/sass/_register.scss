@@ -1,0 +1,61 @@
+.register{
+  width: 650px;
+   height: 450px;
+   border: 1px solid $primary-color;
+   position: absolute;
+   top: 10%;
+   left: 26%;
+   border-radius: 10px;
+
+   .header{
+      text-align: center;
+
+      img {
+        margin-top:15px;
+        width: 180px;
+        height: 90px;
+      }
+   }
+
+   form{
+     div{
+        text-align: center;
+        input{
+          @include form-input;
+          margin-top: 20px;
+
+          &:focus {
+            border:1px solid $primary-color;
+          }
+        }
+
+        button {
+           border: 1px solid $primary-color;
+           border-radius: 3px;
+           background: $primary-color;
+           color: white;
+           padding: 0.8rem;
+           width: 180px;
+           margin-top: 30px;
+           cursor: pointer;
+
+           &:hover{
+              background: white;
+              color: $primary-color;
+           }
+        }
+     }
+     .footer-text{
+        margin-top: 20px;
+
+        span{
+           font-size: 13px;
+        }
+        a{
+           color: $link-color;
+           font-size: 13px;
+        }
+     }
+     
+   }
+}

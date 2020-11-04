@@ -3,20 +3,29 @@ import { Image } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Form, FormGroup, Col, Input} from 'reactstrap';
+import {login} from '../store/login';
+import logo from "../assets/logo.PNG";
 
 function Login(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  const onSubmit = () => {
-
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    if(email && password){
+        const formData = {
+          'email' : email,
+          'password' : password
+        }
+        await dispatch(login(formData))
+    }    
   }
 
   return (
     <div className="login">
       <div className="header">
-          <Image src={require('../assets/logo.PNG')} />
+          <Image src={logo} />
       </div>
       
       <Form onSubmit={onSubmit}>

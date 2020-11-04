@@ -18,7 +18,7 @@ const slice = createSlice({
           register.registering = ''
           register.user= user
           setUser(user)          
-          window.location = '/home'
+          window.location = '/students'
         }
         else{
           register.registering = false

@@ -1,0 +1,41 @@
+.student-list{
+   .top-row{
+      padding-left: 20px;
+      width: 100%;
+
+      h5{
+         font-size: 18px;
+         color : #3B3A3A;
+         margin-top: 15px;
+         margin-bottom: 15px;
+      }
+   }
+
+   .body-row1{
+      width: 100%;
+      padding: 10px;
+   }
+
+   .body-row2{
+      width: 100%;
+      padding: 10px;
+      margin-left: 10px;
+   }
+
+   .add-student{
+      position: absolute;
+      bottom : 40px;
+      right: 40px;
+      background: $link-color;
+      color: white;
+      z-index: 800;
+      border: 1px solid $link-color;
+      padding: 10px 20px;
+      border-radius: 20px;
+
+      &:hover{
+         background: white;
+         color: $link-color;
+      }
+   }
+}

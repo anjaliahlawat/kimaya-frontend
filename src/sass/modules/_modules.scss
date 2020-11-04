@@ -1,0 +1,18 @@
+.wrapper{
+  .sidebar{
+     width: 11vw;
+     background: white;
+     height: 100vh;
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 1050;
+  }
+
+  .content{
+     height: 100vh;
+     width: 89vw;
+     margin-left: 11vw;
+    //  background: $secondary-color;
+  }
+}

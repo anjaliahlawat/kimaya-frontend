@@ -1,0 +1,32 @@
+@import "./config";
+@import "./login";
+@import "./register";
+@import "./pagination";
+@import "./modules/modules";
+@import "./student-list";
+@import "./studentModal";
+@import "./sidebar/sidebar";
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+img {
+  object-fit: contain;
+}
+
+.container-fluid {
+  padding: 0px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul {
+   list-style: none;
+}

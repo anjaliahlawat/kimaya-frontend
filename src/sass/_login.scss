@@ -1,0 +1,59 @@
+.login{
+  width: 650px;
+   height: 450px;
+   border: 1px solid $primary-color;
+   position: absolute;
+   top: 10%;
+   left: 26%;
+   border-radius: 10px;
+
+   .header{
+      text-align: center;
+
+      img {
+        margin-top:15px;
+        width: 180px;
+        height: 90px;
+      }
+   }
+   form{
+    .col-lg-6{
+       text-align: center;
+       input{
+         @include form-input;
+
+         &:focus {
+           border:1px solid $primary-color;
+         }
+       }
+
+       button {
+          border: 1px solid $primary-color;
+          border-radius: 3px;
+          background: $primary-color;
+          color: white;
+          padding: 0.8rem;
+          width: 180px;
+          margin-top: 40px;
+          cursor: pointer;
+
+          &:hover{
+             background: white;
+             color: $primary-color;
+          }
+       }
+    }
+    .footer-text{
+       margin-top: 25px;
+
+       span{
+          font-size: 13px;
+       }
+       a{
+          color: $link-color;
+          font-size: 13px;
+       }
+    }
+    
+  }
+}
