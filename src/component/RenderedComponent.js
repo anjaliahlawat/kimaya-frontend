@@ -3,12 +3,13 @@ import StudentList from './Students/StudentList'
 import StudentProfile from './Students/StudentProfile'
 import Settings from './Settings/Settings'
 
-function RenderedComponent({module, folder, notify}) {
+function RenderedComponent({module, uin, notify}) {
+  console.log(uin)
   if(module === 'students'){
-      if(folder === undefined)
-          return ( <StudentList folder={folder} notify={notify}/> )
+      if(uin === undefined)
+          return ( <StudentList notify={notify}/> )
       else
-          return ( <StudentProfile folder={folder} notify={notify}/> )
+          return ( <StudentProfile uin={uin} notify={notify}/> )
   }
   else if(module === 'settings')
     return (<Settings notify={notify} /> )

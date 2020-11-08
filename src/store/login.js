@@ -17,10 +17,10 @@ const slice = createSlice({
     login_success: (authentication, action) => {
         const {result, user} = action.payload
         if(result === 'success'){
-          authentication.loggedIn = true
-          authentication.user= user
-          setUser(user)
-          window.location = '/home'
+            authentication.loggedIn = true
+            authentication.user= user
+            setUser(user)
+            window.location = '/students'
         }
         else{
           authentication.loggedIn = false

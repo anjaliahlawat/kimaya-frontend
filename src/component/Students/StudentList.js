@@ -3,17 +3,22 @@ import SearchBox from "../common/SearchBox";
 import Pagination from '../common/Pagination';
 import StudentModal from './StudentModal';
 import { paginate } from '../../common-functions/paginate';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadStudents, getAllStudents } from '../../store/studentList';
+import { Link } from 'react-router-dom';
+import Header from '../common/Header';
 
 function StudentList(props) {
   const limit = 20
 
-  const [students, setStudents] = useState([])
+  let students = useSelector(getAllStudents)
   const [searchedValue, setSearchedValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isModalOpen, setModal] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-
+    dispatch(loadStudents())
   }, [])
 
   const toggleModal = (e) => {
@@ -49,9 +54,7 @@ function StudentList(props) {
         <button className="add-student" type="button" onClick={toggleModal}>
             Add Student
         </button>
-        <div className="row top-row">
-            <h5>Student List</h5>
-        </div>
+        <Header title={"Student List"} />
         <div className="row body-row1">
             <div className="col-6 col-md-4 col-lg-6">
                 <SearchBox 
@@ -73,16 +76,26 @@ function StudentList(props) {
                 students.length === 0 ?
                 <p>No students added.</p>
                 :
-                arr.map((student, key) => {
-                   return(
-                      <div>
-                          <div>{key + 1}</div>
-                          <div>{student.name}</div>
-                          <div>{student.admissionNo}</div>
-                          <div>{student.class}</div>
+                <React.Fragment>
+                    <div className="d-flex justify-content-around student-header">
+                          <div className="p-2">Sr. No</div>
+                          <div className="p-2">Student</div>
+                          <div className="p-2">Admission No.</div>
+                          <div className="p-2">Class</div>
                       </div>
-                   )
-                })
+                      {arr.map((student, key) => {
+                         return(
+                            <Link to={`/students/${student.admissionNum}`} params={{ uin: student.admissionNum }}>
+                                <div className="d-flex justify-content-around student-rows">
+                                    <div className="p-2">{key + 1}</div>
+                                    <div className="p-2">{student.name}</div>
+                                    <div className="p-2">{student.admissionNum}</div>
+                                    <div className="p-2">{student.class}</div>
+                                </div>
+                            </Link>
+                            )
+                      })}
+                </React.Fragment>
             }
         </div>
         <StudentModal 

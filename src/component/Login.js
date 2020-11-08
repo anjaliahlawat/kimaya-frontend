@@ -29,7 +29,7 @@ function Login(props) {
       </div>
       
       <Form onSubmit={onSubmit}>
-          <FormGroup row>
+            <FormGroup row>
                 <Col lg={6} className="offset-lg-3">
                     <Input 
                         type="email" 

@@ -17,7 +17,7 @@ function Module(props) {
         <div className="content">
             <RenderedComponent  
               module={props.match.params.module}
-              folder={props.match.params.folder}
+              uin={props.match.params.uin}
               notify={notify}
             />
             <ToastContainer 

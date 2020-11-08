@@ -25,7 +25,8 @@ const slice = createSlice({
      studentAdded : (studentLists, action) => {
         const {result, data} = action.payload
         if(result === 'success'){
-           studentLists.list = [...studentLists.list, ...data]
+           studentLists.list = [...studentLists.list,{ ...data}]
+           window.location='/students'
         }
      },
      studentsDeleted : (studentLists, action) => {
@@ -57,7 +58,7 @@ export const loadStudents = () => (dispatch, getState) => {
 
   return dispatch(
      apiCallBegan({
-        url: url + '/students-list',
+        url: url + '/student-list',
         method: 'post',
         data: {
          //   user: getUser().userEmail
@@ -69,12 +70,12 @@ export const loadStudents = () => (dispatch, getState) => {
   )
 }
 
-// export const addTask = tasks => apiCallBegan({
-//   url: url + '/create',
-//   method: 'post',
-//   data: {tasks: JSON.stringify(tasks), user: getUser().userEmail},
-//   onSuccess: taskAdded.type
-// })
+export const addStudent = students => apiCallBegan({
+  url: url + '/add-student',
+  method: 'post',
+  data: {students: students},
+  onSuccess: studentAdded.type
+})
 
 // export const deleteTask = task => apiCallBegan({
 //   url: url + '/delete',
@@ -83,7 +84,7 @@ export const loadStudents = () => (dispatch, getState) => {
 //   onSuccess: taskDeleted.type
 // })
 
-// export const getPersonalTasks =createSelector(
-//    state => state.entities.capturedTasks,
-//    capturedTasks => capturedTasks.list.filter(task => task.category === 'personal')
-//  );
+export const getAllStudents =createSelector(
+   state => state.entities.studentLists,
+   studentLists => studentLists.list
+ );

@@ -17,6 +17,9 @@
           color: $green-color;
           background: white;
        }
+       &:focus {
+         outline: none !important;
+       }
     }
     .cancel{
       background: $red-color;
@@ -26,5 +29,28 @@
         color: $red-color;
         background: white;
       }
+      &:focus {
+         outline: none !important;
+       }
+    }
+
+    form{
+      ::placeholder {
+         color: $inactive-text;
+       }
+    }
+
+    h5{
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .modal-field{
+       font-size: 13px;       
+    }
+
+    textarea{
+         width : 220px;
+         height: 100px;
     }
 }
