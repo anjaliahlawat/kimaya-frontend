@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import SearchBox from "../common/SearchBox";
-import Pagination from '../common/Pagination';
+import SearchBox from "../../common/SearchBox";
+import Pagination from '../../common/Pagination';
 import StudentModal from './StudentModal';
-import { paginate } from '../../common-functions/paginate';
+import { paginate } from '../../../common-functions/paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadStudents, getAllStudents } from '../../store/studentList';
+import { loadStudents, getAllStudents } from '../../../store/studentList';
 import { Link } from 'react-router-dom';
-import Header from '../common/Header';
+import Header from '../../common/Header';
 
 function StudentList(props) {
   const limit = 20

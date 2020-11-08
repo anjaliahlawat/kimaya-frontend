@@ -1,10 +1,9 @@
 import React from 'react'
-import StudentList from './Students/StudentList'
-import StudentProfile from './Students/StudentProfile'
+import StudentList from './Students/StudentList/StudentList'
+import StudentProfile from './Students/StudentProfile/StudentProfile'
 import Settings from './Settings/Settings'
 
 function RenderedComponent({module, uin, notify}) {
-  console.log(uin)
   if(module === 'students'){
       if(uin === undefined)
           return ( <StudentList notify={notify}/> )

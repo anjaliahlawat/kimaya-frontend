@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StudentBody({data}) {
+function FeePayments(props) {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function StudentBody({data}) {
   );
 }
 
-export default StudentBody;
+export default FeePayments;

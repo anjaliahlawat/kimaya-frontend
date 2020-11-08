@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Modal, ModalHeader, ModalBody, Input, FormGroup, Col } from "reactstrap";
-import Select from '../common/Select'
-import {addStudent} from '../../store/studentList';
+import Select from '../../common/Select'
+import {addStudent} from '../../../store/studentList';
 
-const months = require('../../assets/months.json')
+const months = require('../../../assets/months.json')
 
 function StudentModal({isModalOpen, toggleModal}){
   const [studentName, setName] = useState('')
