@@ -24,7 +24,7 @@ function StudentList(props) {
   const toggleModal = (e) => {
     e.preventDefault()
     setModal(!isModalOpen)
-}
+  }
 
   const getPagedData = () => {
     let filtered = []

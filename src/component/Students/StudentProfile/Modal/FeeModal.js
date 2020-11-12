@@ -1,0 +1,135 @@
+import React, { useState } from 'react';
+import { Form, Modal, ModalHeader, ModalBody, Col, Row, Input } from "reactstrap";
+import Select from '../../../common/Select';
+import InputBox from './FormGroup';
+
+const months = require('../../../../assets/months.json')
+
+function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
+  const [date, setDate] = useState()
+  const [modeOfPayment, setModeOfPayment] = useState('Online')
+  const [totalFee, setTotalFee] = useState('')
+  const [registrationFee, setRegistrationFee] = useState('')
+  const [admissionFee, setAdmissionFee] = useState('')
+  const [developmentCharges, setDevelopmentCharges] = useState('')
+  const [annualCharges, setAnnualCharges] = useState('')
+  const [tuitionFee, setTuitionFee] = useState('')
+  const [activityCharges, setActivityCharges] = useState('')
+  const [meal, setMeal] = useState('')
+  const [transport, setTransport] = useState('')
+  const [misc, setMisc] = useState('')
+  const [uniform, setUniform] = useState('')
+  const [bookNbag, setBookNbag] = useState('')
+  const [dayCare, setDayCare] = useState('')
+
+  const modeArr = [
+      {
+          _id : 1,
+          name : 'Online',
+      },
+      {
+        _id : 1,
+        name : 'Cash',
+      },
+      {
+        _id : 1,
+        name : 'Cheque',
+     }
+  ]
+
+  const onSubmit = async (e)=> {
+    e.preventDefault()
+    let totalFee = calculateFee()
+    const feeDetails = {
+        registrationFee : registrationFee,
+        admissionFee : admissionFee,
+        developmentCharges : developmentCharges,
+        annualCharges : annualCharges,
+        activityCharges : activityCharges,
+        tuitionFee : tuitionFee,
+        meal : meal,
+        transport : transport,
+        misc : misc,
+        uniform : uniform,
+        bookNbag : bookNbag,
+        dayCare : dayCare,
+    }
+    if(isValid()){
+          const formData = {
+            "modeOfPayment" : modeOfPayment,
+            "date" : date,
+            "admissionNum" : admissionNum,
+            "month" : currMonth,
+            "totalFee" : totalFee,
+            "feeDetails" : feeDetails,
+          }
+          console.log(formData)
+        //   await dispatch(addStudent(formData))
+     }
+  }
+
+  const isValid = () => {
+      if(modeOfPayment && date && totalFee)
+         return true
+      return false
+  }
+
+  const calculateFee = () => {
+      return registrationFee + admissionFee + developmentCharges + annualCharges + tuitionFee + activityCharges + meal + transport + misc + uniform + bookNbag + dayCare
+  }
+
+  return (
+    <Modal className="student-modal" isOpen={isModalOpen} toggle={toggleModal} 
+        size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+        <ModalHeader>
+            Fee Payment
+            <span className="month">{months[currMonth].name}</span>    
+        </ModalHeader>
+        <ModalBody>
+            <Form onSubmit={onSubmit}>
+                <Row>
+                    <Col lg={2}>Date</Col>
+                    <Col lg={5}><Input type="date" value={date} onChange={e=>setDate(e.target.value)}/></Col>
+                </Row>
+                <Row>
+                    <Col lg={5}>
+                        <InputBox name='registrationFee' value={registrationFee} onChange={setRegistrationFee} label={'Registration Fee'}/>
+                        <InputBox name='admissionFee' value={admissionFee} onChange={setAdmissionFee}
+                        label={'Admission Fee'} />
+                        <InputBox name='developmentCharges' value={developmentCharges} onChange={setDevelopmentCharges} label={'Development Charges'}/>
+                        <InputBox name='annualCharges' value={annualCharges} onChange={setAnnualCharges} label={'Annual Charges'}/>
+                        <InputBox name='tuitionFee' value={tuitionFee} onChange={setTuitionFee} label={'Tuition Fee'} />
+                        <InputBox name='activityCharges' value={activityCharges} onChange={setActivityCharges} label={'Activity Charges'}/>
+                    </Col>
+                    <Col lg={5}>
+                        <InputBox name='meal' value={meal} onChange={setMeal} label={'Meal'}/>
+                        <InputBox name='transport' value={transport} onChange={setTransport} label={'Transport'}/>
+                        <InputBox name='misc' value={misc} onChange={setMisc} label={'Misc'}/>
+                        <InputBox name='uniform' value={uniform} onChange={setUniform} label={'Uniform'}/>
+                        <InputBox name='bookNbag' value={bookNbag} onChange={setBookNbag} label={'Books & Bag'}/>
+                        <InputBox name='dayCare' value={dayCare} onChange={setDayCare} label={'Day Care'}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col lg={4}>
+                        Mode of Payment
+                    </Col>
+                    <Col lg={4}>
+                        <Select 
+                            name={'modeOfPayment'} 
+                            label={""} 
+                            options={modeArr}
+                            onChange={(e) => setModeOfPayment(e.target.value)}
+                        />
+
+                    </Col>
+                </Row>
+                <button className="btn-group save">Save</button>
+                <button className="btn-group cancel mr-2" onClick={toggleModal}>Cancel</button>
+            </Form>           
+        </ModalBody>
+    </Modal>
+  );
+}
+
+export default FeeModal;

@@ -2,13 +2,17 @@ import React from 'react';
 import { Form, Input, FormGroup, Col, Label } from "reactstrap";
 
 function EditForm({data, onEdit}) {
+  if(data.length === 0)
+      return null
   return (
-    <Form>
+    <Form className="student-form">
         {data.map((item, key) => {
             return(
               <FormGroup row>
-                 <Label>{item.label}</Label>
-                  <Col lg={6} className="offset-lg-3">
+                  <Col lg={4} >
+                      <Label>{item.label}</Label>
+                  </Col>
+                  <Col lg={8}>
                       <Input 
                           type="text" 
                           className="modal-field"

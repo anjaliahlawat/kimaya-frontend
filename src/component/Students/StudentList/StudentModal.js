@@ -19,7 +19,7 @@ function StudentModal({isModalOpen, toggleModal}){
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    if(isValid){
+    if(isValid()){
         const formData = {
           "studentName" : studentName,
           "admissionNo" : admissionNo,

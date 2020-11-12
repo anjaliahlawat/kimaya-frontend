@@ -11,14 +11,14 @@ function StudentProfile({uin, notify}) {
   useEffect(()=> {
     dispatch(loadStudentData(uin))
     console.log(studentData)
-  }, [uin])
+  }, [studentData])
 
   if(!studentData)
       return null
   return (
     <div className="container-fluid student-profile">
         <Header title={`Students | ${uin}`} />
-        <StudentBody data={studentData}/>
+        <StudentBody data={studentData} admissionNum={uin}/>
     </div>
   );
 }

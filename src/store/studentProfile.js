@@ -14,17 +14,21 @@ const slice = createSlice({
         studentProfile.loading = true
       },
       studentDataReceived: (studentProfile, action) => { 
-          studentProfile.profileData = action.payload
+          const {result, studentData} = action.payload
+          if(result === 'success'){
+              studentProfile.profileData = {...studentData}
+              studentProfile.lastFetch = Date.now()
+          }
           studentProfile.loading = false
-          studentProfile.lastFetch = Date.now()
       },
       studentDataRequestFailed: (studentProfile, action) => {
         studentProfile.loading = false
       },
       studentDataEdit : (studentProfile, action) => {
-        const {result, data} = action.payload
+        const {result, studentData} = action.payload
+        console.log(action.payload)
         if(result === 'success'){
-           
+            studentProfile.profileData = {...studentData}
         }
      },
   }
