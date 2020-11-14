@@ -8,6 +8,8 @@ import { loadStudents, getAllStudents } from '../../../store/studentList';
 import { Link } from 'react-router-dom';
 import Header from '../../common/Header';
 
+const months = require('../../../assets/months.json')
+
 function StudentList(props) {
   const limit = 20
 
@@ -15,10 +17,11 @@ function StudentList(props) {
   const [searchedValue, setSearchedValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isModalOpen, setModal] = useState(false)
+  const [month, setMonth] = useState(months[(new Date()).getMonth()].name)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadStudents())
+    dispatch(loadStudents(month))
   }, [])
 
   const toggleModal = (e) => {
@@ -77,20 +80,26 @@ function StudentList(props) {
                 <p>No students added.</p>
                 :
                 <React.Fragment>
-                    <div className="d-flex justify-content-around student-header">
+                    <div className="d-flex student-header">
                           <div className="p-2">Sr. No</div>
                           <div className="p-2">Student</div>
                           <div className="p-2">Admission No.</div>
                           <div className="p-2">Class</div>
+                          <div className="p-2">Parent/Guardian</div>
+                          <div className="p-2">Fee Status</div>
                       </div>
                       {arr.map((student, key) => {
                          return(
-                            <Link to={`/students/${student.admissionNum}`} params={{ uin: student.admissionNum }}>
-                                <div className="d-flex justify-content-around student-rows">
+                            <Link to={`/students/${student.admissionNum}`} params={{ uin: student.admissionNum }} key={key}>
+                                <div className="d-flex student-rows">
                                     <div className="p-2">{key + 1}</div>
                                     <div className="p-2">{student.name}</div>
                                     <div className="p-2">{student.admissionNum}</div>
                                     <div className="p-2">{student.class}</div>
+                                    <div className="p-2">{student.parent.name}</div>
+                                    <div className={`p-2 ${student.status}`}>
+                                        <div>{student.status}</div>
+                                    </div>
                                 </div>
                             </Link>
                             )

@@ -49,7 +49,7 @@ export default slice.reducer
 //Action creators 
 const url = '/student'
 
-export const loadStudents = () => (dispatch, getState) => {
+export const loadStudents = (data) => (dispatch, getState) => {
   const { lastFetch } = getState().entities.studentLists
   
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
@@ -61,7 +61,7 @@ export const loadStudents = () => (dispatch, getState) => {
         url: url + '/student-list',
         method: 'post',
         data: {
-         //   user: getUser().userEmail
+           month: data
         },
         onStart:  studentsRequested.type,
         onSuccess: studentsReceived.type,

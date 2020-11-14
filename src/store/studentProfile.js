@@ -15,6 +15,7 @@ const slice = createSlice({
       },
       studentDataReceived: (studentProfile, action) => { 
           const {result, studentData} = action.payload
+          console.log(studentData)
           if(result === 'success'){
               studentProfile.profileData = {...studentData}
               studentProfile.lastFetch = Date.now()
@@ -26,11 +27,17 @@ const slice = createSlice({
       },
       studentDataEdit : (studentProfile, action) => {
         const {result, studentData} = action.payload
-        console.log(action.payload)
         if(result === 'success'){
             studentProfile.profileData = {...studentData}
         }
      },
+     feePaid : (studentProfile, action) => {
+        const {result} = action.payload
+        console.log(action.payload)
+        if(result === 'success'){
+            
+        }
+     }
   }
 })
 
@@ -38,7 +45,8 @@ export const {
   studentDataRequested,
   studentDataReceived,
   studentDataRequestFailed,
-  studentDataEdit
+  studentDataEdit,
+  feePaid
 } = slice.actions  
 
 export default slice.reducer
@@ -66,6 +74,13 @@ export const loadStudentData = (data) => (dispatch, getState) => {
      })
   )
 }
+
+export const payStudentFees = (data) => apiCallBegan({
+  url: url + '/pay-fees',
+  method: 'post',
+  data: data,
+  onSuccess: feePaid.type
+})
 
 export const getStudentData =createSelector(
   state => state.entities.studentProfile,

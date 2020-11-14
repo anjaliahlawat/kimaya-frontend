@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, Modal, ModalHeader, ModalBody, Col, Row, Input } from "reactstrap";
 import Select from '../../../common/Select';
 import InputBox from './FormGroup';
+import { useDispatch } from 'react-redux';
+import { payStudentFees } from '../../../../store/studentProfile';
 
 const months = require('../../../../assets/months.json')
 
@@ -21,6 +23,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   const [uniform, setUniform] = useState('')
   const [bookNbag, setBookNbag] = useState('')
   const [dayCare, setDayCare] = useState('')
+  const dispatch = useDispatch()
 
   const modeArr = [
       {
@@ -28,11 +31,11 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
           name : 'Online',
       },
       {
-        _id : 1,
+        _id : 2,
         name : 'Cash',
       },
       {
-        _id : 1,
+        _id : 3,
         name : 'Cheque',
      }
   ]
@@ -55,21 +58,20 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
         dayCare : dayCare,
     }
     if(isValid()){
-          const formData = {
+        const formData = {
             "modeOfPayment" : modeOfPayment,
             "date" : date,
             "admissionNum" : admissionNum,
-            "month" : currMonth,
+            "month" : months[currMonth].name,
             "totalFee" : totalFee,
             "feeDetails" : feeDetails,
-          }
-          console.log(formData)
-        //   await dispatch(addStudent(formData))
-     }
+        }
+        await dispatch(payStudentFees(formData))
+    }
   }
 
   const isValid = () => {
-      if(modeOfPayment && date && totalFee)
+      if(modeOfPayment !== '' && date !== '' && totalFee !== 0)
          return true
       return false
   }
@@ -119,7 +121,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
                             name={'modeOfPayment'} 
                             label={""} 
                             options={modeArr}
-                            onChange={(e) => setModeOfPayment(e.target.value)}
+                            onChange={(e) => setModeOfPayment(modeArr[e.target.value-1].name)}
                         />
 
                     </Col>
