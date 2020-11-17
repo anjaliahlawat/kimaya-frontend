@@ -15,6 +15,7 @@ const slice = createSlice({
         studentLists.loading = true
      },
      studentsReceived: (studentLists, action) => {
+      //   console.log(action.payload)
         studentLists.list = action.payload
         studentLists.loading = false
         studentLists.lastFetch = Date.now()

@@ -15,7 +15,6 @@ const slice = createSlice({
       },
       studentDataReceived: (studentProfile, action) => { 
           const {result, studentData} = action.payload
-          console.log(studentData)
           if(result === 'success'){
               studentProfile.profileData = {...studentData}
               studentProfile.lastFetch = Date.now()
@@ -33,9 +32,8 @@ const slice = createSlice({
      },
      feePaid : (studentProfile, action) => {
         const {result} = action.payload
-        console.log(action.payload)
         if(result === 'success'){
-            
+            window.location = '/'
         }
      }
   }
@@ -55,12 +53,6 @@ export default slice.reducer
 const url = '/student'
 
 export const loadStudentData = (data) => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.studentProfile
-  
-  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
-
-  if(diffInMinutes < 10) return
-
   return dispatch(
      apiCallBegan({
         url: url + '/student-data',

@@ -10,19 +10,19 @@ const months = require('../../../../assets/months.json')
 function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   const [date, setDate] = useState()
   const [modeOfPayment, setModeOfPayment] = useState('Online')
-  const [totalFee, setTotalFee] = useState('')
-  const [registrationFee, setRegistrationFee] = useState('')
-  const [admissionFee, setAdmissionFee] = useState('')
-  const [developmentCharges, setDevelopmentCharges] = useState('')
-  const [annualCharges, setAnnualCharges] = useState('')
-  const [tuitionFee, setTuitionFee] = useState('')
-  const [activityCharges, setActivityCharges] = useState('')
-  const [meal, setMeal] = useState('')
-  const [transport, setTransport] = useState('')
-  const [misc, setMisc] = useState('')
-  const [uniform, setUniform] = useState('')
-  const [bookNbag, setBookNbag] = useState('')
-  const [dayCare, setDayCare] = useState('')
+  const [totalFee, setTotalFee] = useState()
+  const [registrationFee, setRegistrationFee] = useState()
+  const [admissionFee, setAdmissionFee] = useState()
+  const [developmentCharges, setDevelopmentCharges] = useState()
+  const [annualCharges, setAnnualCharges] = useState()
+  const [tuitionFee, setTuitionFee] = useState()
+  const [activityCharges, setActivityCharges] = useState()
+  const [meal, setMeal] = useState()
+  const [transport, setTransport] = useState()
+  const [misc, setMisc] = useState()
+  const [uniform, setUniform] = useState()
+  const [bookNbag, setBookNbag] = useState()
+  const [dayCare, setDayCare] = useState()
   const dispatch = useDispatch()
 
   const modeArr = [
@@ -42,7 +42,8 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
 
   const onSubmit = async (e)=> {
     e.preventDefault()
-    let totalFee = calculateFee()
+    const totalFee = calculateFee()
+    setTotalFee(totalFee)
     const feeDetails = {
         registrationFee : registrationFee,
         admissionFee : admissionFee,
@@ -63,7 +64,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
             "date" : date,
             "admissionNum" : admissionNum,
             "month" : months[currMonth].name,
-            "totalFee" : totalFee,
+            "totalFees" : totalFee,
             "feeDetails" : feeDetails,
         }
         await dispatch(payStudentFees(formData))
@@ -77,7 +78,14 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   }
 
   const calculateFee = () => {
-      return registrationFee + admissionFee + developmentCharges + annualCharges + tuitionFee + activityCharges + meal + transport + misc + uniform + bookNbag + dayCare
+      let sum = checkValue(registrationFee) + checkValue(admissionFee) + checkValue(developmentCharges) + checkValue(annualCharges) + checkValue(tuitionFee) + checkValue(activityCharges) + checkValue(meal) + checkValue(transport) + checkValue(misc) + checkValue(uniform) + checkValue(bookNbag) + checkValue(dayCare)
+      return sum
+  }
+
+  const checkValue = (val) => {
+    if(!val)
+        return 0
+    return parseFloat(val)
   }
 
   return (

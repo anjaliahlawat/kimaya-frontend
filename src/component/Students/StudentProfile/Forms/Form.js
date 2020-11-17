@@ -8,7 +8,7 @@ function EditForm({data, onEdit}) {
     <Form className="student-form">
         {data.map((item, key) => {
             return(
-              <FormGroup row>
+              <FormGroup row key={key}>
                   <Col lg={4} >
                       <Label>{item.label}</Label>
                   </Col>

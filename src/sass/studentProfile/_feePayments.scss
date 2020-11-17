@@ -2,4 +2,49 @@
   background: white;
   height : 80vh;
   overflow-y: auto;
+
+  .row1{
+     padding : 1rem 2rem;
+     margin-top: 20px;
+
+     button{
+        padding : 0 1rem;
+        background: none;
+        border : none;
+        color : $link-color;
+     }
+  }
+  .row2{
+     margin-top: 20px;
+     h5{
+        font-size: 14px;
+        font-weight: 600;
+        color : $link-color;
+        padding: 1rem;
+     }
+
+     &_data {
+        div{
+           width : 27%;
+           font-size: 14px;
+           text-align: center;
+
+           &.last{
+              width : 20%;
+              color : $primary-color;
+           }
+        }
+        &.header{
+           div{
+              font-weight: 600;
+              text-align: center;
+
+              &.last{
+                width : 20%;
+              }
+           }
+        }
+     }
+
+  }
 }

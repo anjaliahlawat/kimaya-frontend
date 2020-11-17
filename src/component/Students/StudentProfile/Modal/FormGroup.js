@@ -6,7 +6,7 @@ function InputBox({name, value, label, onChange}) {
     <FormGroup row>
         <Col lg={12} className="offset-lg-3">
             <Input 
-                type="text" 
+                type="number" 
                 className="modal-field"
                 name={name}
                 placeholder={label}

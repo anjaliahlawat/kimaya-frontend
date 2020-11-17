@@ -3,18 +3,28 @@ import FeeModal from './Modal/FeeModal';
 
 function FeePayments({data, admissionNum}){
   const currMonth = new Date().getMonth()
+  const currYear = new Date().getFullYear()
   const [isModalOpen, setModal] = useState(false)
 
   const isFeePending =() => {
     if(data.length > 0){
-       
+      for(let i=0; i< data.length; i++){
+          let d1 = new Date(data[i].paymentDate)
+           if(currMonth === d1.getMonth() && currYear === d1.getFullYear())
+              return false
+       }
+       return true
     }
     return true
   }
 
-  const toggleModal = (e) => {
-    e.preventDefault()
-    setModal(!isModalOpen)
+  const toggleModal = () => {
+      setModal(!isModalOpen)
+  }
+
+  const setDate = (val) => {
+     let d1 = new Date(val.paymentDate)
+     return val.month +" "+ d1.getDate() + ", " + d1.getFullYear()
   }
 
   return (
@@ -25,7 +35,27 @@ function FeePayments({data, admissionNum}){
             </div>
         }
         <div className="row row2">
-            
+            <h5>List of previous payments</h5>
+            <div className="col-12 d-flex row2_data header">
+                <div className="p-2">Reference No.</div>
+                <div className="p-2">Total Fees</div>
+                <div className="p-2">Date</div>
+                <div className="p-2">Mode of Payment</div>
+                <div className="p-2">Status</div>
+                <div className="p-2 last"></div>
+            </div>
+            {data.length > 0 && data.map((item, key)=> {
+               return(
+                 <div className="col-12 d-flex row2_data">
+                    <div className="p-2">{item.referenceNo}</div>
+                    <div className="p-2">₹{item.totalFees}</div>
+                    <div className="p-2">{setDate(item)}</div>
+                    <div className="p-2">{item.modeOfPayment}</div>
+                    <div className="p-2">{item.status}</div>
+                    <div className="p-2 last">Generate Receipt</div>
+                 </div>
+               )
+            })}
         </div>
         <FeeModal 
             isModalOpen={isModalOpen} 

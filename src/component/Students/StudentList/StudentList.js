@@ -10,9 +10,8 @@ import Header from '../../common/Header';
 
 const months = require('../../../assets/months.json')
 
-function StudentList(props) {
+function StudentList(props){
   const limit = 20
-
   let students = useSelector(getAllStudents)
   const [searchedValue, setSearchedValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)

@@ -10,8 +10,8 @@ function StudentProfile({uin, notify}) {
 
   useEffect(()=> {
     dispatch(loadStudentData(uin))
-    console.log(studentData)
-  }, [studentData])
+    // console.log(studentData)
+  }, [])
 
   if(!studentData)
       return null
