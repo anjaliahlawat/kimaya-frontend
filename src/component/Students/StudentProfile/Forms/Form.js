@@ -18,7 +18,7 @@ function EditForm({data, onEdit}) {
                           className="modal-field"
                           name={item.field}
                           value={item.value} 
-                          onChange={(e) => onEdit(e.target)}
+                          onChange={(e) => onEdit(e.target, key)}
                           readOnly={!item.editable}
                       />
                   </Col>

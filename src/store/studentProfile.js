@@ -15,6 +15,7 @@ const slice = createSlice({
       },
       studentDataReceived: (studentProfile, action) => { 
           const {result, studentData} = action.payload
+          console.log(studentData.studentDetails[0])
           if(result === 'success'){
               studentProfile.profileData = {...studentData}
               studentProfile.lastFetch = Date.now()
@@ -52,20 +53,16 @@ export default slice.reducer
 //Action creators 
 const url = '/student'
 
-export const loadStudentData = (data) => (dispatch, getState) => {
-  return dispatch(
-     apiCallBegan({
-        url: url + '/student-data',
-        method: 'post',
-        data: {
-           admissionNum: data
-        },
-        onStart:  studentDataRequested.type,
-        onSuccess: studentDataReceived.type,
-        onError: studentDataRequestFailed.type
-     })
-  )
-}
+export const loadStudentData = (data) => apiCallBegan({
+    url: url + '/student-data',
+    method: 'post',
+    data: {
+        admissionNum: data
+    },
+    onStart:  studentDataRequested.type,
+    onSuccess: studentDataReceived.type,
+    onError: studentDataRequestFailed.type
+})
 
 export const payStudentFees = (data) => apiCallBegan({
   url: url + '/pay-fees',

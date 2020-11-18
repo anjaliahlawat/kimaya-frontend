@@ -8,12 +8,13 @@ function StudentProfile({uin, notify}) {
   const studentData = useSelector(getStudentData)
   const dispatch = useDispatch()
 
-  useEffect(()=> {
+  // console.log(studentData.studentDetails[0])
+
+  useEffect(()=> {    
     dispatch(loadStudentData(uin))
-    // console.log(studentData)
   }, [])
 
-  if(!studentData)
+  if(Object.keys(studentData).length === 0)
       return null
   return (
     <div className="container-fluid student-profile">

@@ -46,7 +46,7 @@ function FeePayments({data, admissionNum}){
             </div>
             {data.length > 0 && data.map((item, key)=> {
                return(
-                 <div className="col-12 d-flex row2_data">
+                 <div className="col-12 d-flex row2_data" key={key}>
                     <div className="p-2">{item.referenceNo}</div>
                     <div className="p-2">₹{item.totalFees}</div>
                     <div className="p-2">{setDate(item)}</div>
