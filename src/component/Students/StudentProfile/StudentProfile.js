@@ -8,8 +8,6 @@ function StudentProfile({uin, notify}) {
   const studentData = useSelector(getStudentData)
   const dispatch = useDispatch()
 
-  // console.log(studentData.studentDetails[0])
-
   useEffect(()=> {    
     dispatch(loadStudentData(uin))
   }, [])

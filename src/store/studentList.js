@@ -51,7 +51,12 @@ export default slice.reducer
 const url = '/student'
 
 export const loadStudents = (data) => (dispatch, getState) => {
-  return dispatch(
+   const { lastFetch } = getState().entities.studentLists
+   
+   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
+
+   if(diffInMinutes < 10) return
+   return dispatch(
      apiCallBegan({
         url: url + '/student-list',
         method: 'post',

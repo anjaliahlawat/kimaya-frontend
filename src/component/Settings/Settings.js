@@ -1,16 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, FormGroup, Col, Label } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadSettings, getSettings, editSettings } from '../../store/settings';
 
 function Settings(props) {
   const [schoolName, setSchoolName] = useState('')
   const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
+  const [contactNum, setContactNum] = useState('')
   const [address, setAddress] = useState('')
   const [pincode, setPincode] = useState('')
+  const dispatch = useDispatch()
+  const storeData = useSelector(getSettings)
+
+  useEffect(()=> {
+    dispatch(loadSettings())
+    if( storeData && Object.keys(storeData).length >0){
+        setSchoolName(storeData.name)
+        setAddress(storeData.address)
+        setContactNum(storeData.contactNum)
+        setPincode(storeData.pincode)
+        setEmail(storeData.email)
+    }
+  }, [storeData])
+
+  const onSubmit = async (e) => {
+     e.preventDefault()
+      const formData = {
+         'schoolName' : schoolName,
+         'address' : address,
+         'pincode' : pincode,
+         'contactNum' : contactNum,
+         'email' : email,
+      }
+      await dispatch(editSettings(formData))
+  }
 
   return (
     <div className="container-fluid settings">
-       <Form className="settings-form">
+       <Form className="settings-form" onSubmit={onSubmit}>
           <FormGroup row>
               <Col lg={4} >
                   <Label>School Name</Label>
@@ -58,8 +85,8 @@ function Settings(props) {
                   <Input 
                       type="text" 
                       className="modal-field"
-                      value={phoneNumber} 
-                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      value={contactNum} 
+                      onChange={(e) => setContactNum(e.target.value)}
                   />
               </Col>
           </FormGroup>
@@ -76,6 +103,8 @@ function Settings(props) {
                   />
               </Col>
           </FormGroup>
+       
+          <button className="btn-group save">Save</button>
        </Form>
     </div>
   );
