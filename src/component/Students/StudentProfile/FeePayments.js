@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { generatePdf } from '../../../common-functions/generatePdf';
+import { getSettings, loadSettings } from '../../../store/settings';
 import FeeModal from './Modal/FeeModal';
 
 function FeePayments({data, admissionNum}){
   const currMonth = new Date().getMonth()
   const currYear = new Date().getFullYear()
   const [isModalOpen, setModal] = useState(false)
+  const dispatch = useDispatch()
+  const storeData = useSelector(getSettings)
+
+  useEffect(()=> {
+    dispatch(loadSettings())
+  }, [])
 
   const isFeePending =() => {
     if(data.length > 0){
@@ -52,7 +61,7 @@ function FeePayments({data, admissionNum}){
                     <div className="p-2">{setDate(item)}</div>
                     <div className="p-2">{item.modeOfPayment}</div>
                     <div className="p-2">{item.status}</div>
-                    <div className="p-2 last">Generate Receipt</div>
+                    <div className="p-2 last" onClick={() =>generatePdf(item, storeData)}>Generate Receipt</div>
                  </div>
                )
             })}

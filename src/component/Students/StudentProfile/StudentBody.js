@@ -3,13 +3,13 @@ import { Tab, Tabs } from 'react-bootstrap';
 import FeePayments from './FeePayments';
 import StudentDetails from './StudentDetails';
 
-function StudentBody({data, admissionNum, onEdit}) {
-  const [studentData, setStudentData] = useState(data)
+function StudentBody({data, admissionNum}) {
+  const [studentData, setStudentData] = useState({})
   const [key, setKey] = useState('studentDetails')
 
-  // useEffect(() => {
-  //   console.log(data)
-  // }, [])
+  useEffect(() => {
+    setStudentData({...data})
+  }, [data])
 
   const handleChange = (obj, index) => {
      let temp_obj = {...studentData}
@@ -17,7 +17,7 @@ function StudentBody({data, admissionNum, onEdit}) {
      setStudentData({...temp_obj})
   }
 
-  if(Object.keys(data).length === 0)
+  if(Object.keys(studentData).length === 0)
     return null
   return (
         <Tabs id="student-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
@@ -30,7 +30,7 @@ function StudentBody({data, admissionNum, onEdit}) {
                 />
             </Tab>
             <Tab eventKey="feePayments" title="Fee Payments">
-                <FeePayments data={data.feePayments} admissionNum={admissionNum}/>
+                <FeePayments data={studentData.feePayments} admissionNum={admissionNum}/>
             </Tab>
         </Tabs>
   );

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Form, Modal, ModalHeader, ModalBody, Col, Row, Input } from "reactstrap";
 import Select from '../../../common/Select';
 import InputBox from './FormGroup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { payStudentFees } from '../../../../store/studentProfile';
+import { generatePdf } from '../../../../common-functions/generatePdf';
+import { getSettings, loadSettings } from '../../../../store/settings';
 
 const months = require('../../../../assets/months.json')
 
@@ -24,6 +26,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   const [bookNbag, setBookNbag] = useState()
   const [dayCare, setDayCare] = useState()
   const dispatch = useDispatch()
+  const storeData = useSelector(getSettings)
 
   const modeArr = [
       {
@@ -39,6 +42,10 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
         name : 'Cheque',
      }
   ]
+
+  useEffect(() => {
+    dispatch(loadSettings())
+  }, [])
 
   const onSubmit = async (e)=> {
     e.preventDefault()
@@ -68,7 +75,12 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
             "feeDetails" : feeDetails,
         }
         await dispatch(payStudentFees(formData))
+        let pdfData = {...formData, ...feeDetails}
+        delete pdfData['date']
+        pdfData['paymentDate'] = date
+        generatePdf(pdfData, storeData)
     }
+    toggleModal()
   }
 
   const isValid = () => {

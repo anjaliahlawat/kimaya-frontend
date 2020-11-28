@@ -10,7 +10,7 @@ const Sidebar =({linkName}) => {
   return (
     <nav className="sidebar">
         <div className="sidebar-header">
-            <Image src={logo} />
+            <Image src={logo} id="logo"/>
         </div>
         <AllLinks linkName={linkName}/>
         <Button className="logout-btn" onClick={() =>dispatch({type: logout.type})}>Logout</Button>

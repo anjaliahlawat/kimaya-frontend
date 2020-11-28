@@ -32,9 +32,9 @@ const slice = createSlice({
         }
      },
      feePaid : (studentProfile, action) => {
-        const {result} = action.payload
+        const {result, studentData} = action.payload
         if(result === 'success'){
-            window.location = '/'
+           studentProfile.profileData = {...studentData}
         }
      }
   }
