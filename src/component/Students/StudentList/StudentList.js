@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadStudents, getAllStudents } from '../../../store/studentList';
 import { Link } from 'react-router-dom';
 import Header from '../../common/Header';
+import Calender from '../../common/Calender';
 
 const months = require('../../../assets/months.json')
 
@@ -17,11 +18,12 @@ function StudentList(props){
   const [currentPage, setCurrentPage] = useState(1)
   const [isModalOpen, setModal] = useState(false)
   const [month, setMonth] = useState(months[(new Date()).getMonth()].name)
+  const [year, setYear] = useState(new Date().getFullYear())
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadStudents(month))
-  }, [])
+  }, [month, year])
 
   const toggleModal = (e) => {
     e.preventDefault()
@@ -49,6 +51,20 @@ function StudentList(props){
     setCurrentPage(pageNo)
   }
 
+  const onYearChange = async (type) => {
+      if(type === 'left'){
+          setYear(year - 1)
+      }
+      else
+          setYear(year + 1)
+      await dispatch(loadStudents(month))
+  }
+
+  const onMonthSelect = async (month) => {
+    setMonth(month)
+    await dispatch(loadStudents(month))
+  }
+
   const { totalCount, data : arr} = getPagedData()
 
   return (
@@ -64,12 +80,20 @@ function StudentList(props){
                     handleSearch={handleSearch}
                 />                
             </div>
-            <div className="col-6 col-md-4 col-lg-6">
+            <div className="col-6 col-md-4 col-lg-2 offset-2">               
+                <Calender 
+                    month={month} 
+                    year={year} 
+                    onYearChange={onYearChange} 
+                    onMonthSelect={onMonthSelect}
+                />
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
                 <Pagination 
-                  count={totalCount}
-                  currentPage={currentPage}
-                  pageSize={limit}
-                  changePage={changePage}
+                    count={totalCount}
+                    currentPage={currentPage}
+                    pageSize={limit}
+                    changePage={changePage}
                 />
             </div>
         </div>
