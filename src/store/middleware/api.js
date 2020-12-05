@@ -13,7 +13,7 @@ const api = ({dispatch}) => next => async action => {
 
     try{
         const response = await axios.request({
-        baseURL: process.env.KIMAYA_APP_API_URL,
+        baseURL: 'https://kimaya-school-app.herokuapp.com/api',
         url,
         method,
         data
