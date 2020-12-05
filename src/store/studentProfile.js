@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan} from './api'
 import moment from 'moment'
+import { generatePdf } from "../common-functions/generatePdf";
 
 const slice = createSlice({
   name: 'studentProfile',
@@ -30,13 +31,14 @@ const slice = createSlice({
         if(result === 'success'){
             studentProfile.profileData = {...studentData}
         }
-     },
-     feePaid : (studentProfile, action) => {
-        const {result, studentData} = action.payload
-        if(result === 'success'){
-           studentProfile.profileData = {...studentData}
-        }
-     }
+      },
+      feePaid : (studentProfile, action) => {
+          const {result, studentData, schoolData, pdfData} = action.payload
+          if(result === 'success'){
+              studentProfile.profileData = {...studentData}
+              generatePdf(pdfData, schoolData)
+          }          
+      }
   }
 })
 
@@ -74,4 +76,6 @@ export const payStudentFees = (data) => apiCallBegan({
 export const getStudentData =createSelector(
   state => state.entities.studentProfile,
   studentProfile => studentProfile.profileData
-);
+)
+
+

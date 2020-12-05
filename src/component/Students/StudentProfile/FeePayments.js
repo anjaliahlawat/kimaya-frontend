@@ -15,18 +15,6 @@ function FeePayments({data, admissionNum}){
     dispatch(loadSettings())
   }, [])
 
-  const isFeePending =() => {
-    if(data.length > 0){
-      for(let i=0; i< data.length; i++){
-          let d1 = new Date(data[i].paymentDate)
-           if(currMonth === d1.getMonth() && currYear === d1.getFullYear())
-              return false
-       }
-       return true
-    }
-    return true
-  }
-
   const toggleModal = () => {
       setModal(!isModalOpen)
   }
@@ -38,11 +26,9 @@ function FeePayments({data, admissionNum}){
 
   return (
     <div className="container-fluid fee-payments">
-        {isFeePending() && 
-            <div className="row row1">
-                This month's fee is pending: <button onClick={toggleModal}>Pay</button>
-            </div>
-        }
+        <div className="row row1">
+            <button onClick={toggleModal}>Make Payment</button>
+        </div>
         <div className="row row2">
             <h5>List of previous payments</h5>
             <div className="col-12 d-flex row2_data header">

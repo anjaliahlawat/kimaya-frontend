@@ -26,7 +26,6 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   const [bookNbag, setBookNbag] = useState()
   const [dayCare, setDayCare] = useState()
   const dispatch = useDispatch()
-  const storeData = useSelector(getSettings)
 
   const modeArr = [
       {
@@ -44,11 +43,9 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   ]
 
   useEffect(() => {
-    dispatch(loadSettings())
   }, [])
 
-  const onSubmit = async (e)=> {
-    e.preventDefault()
+  const onSubmit = async ()=> {
     const totalFee = calculateFee()
     setTotalFee(totalFee)
     const feeDetails = {
@@ -66,19 +63,17 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
         dayCare : dayCare,
     }
     if(isValid()){
+        let monthIndex = new Date(date).getMonth()
         const formData = {
             "modeOfPayment" : modeOfPayment,
             "date" : date,
             "admissionNum" : admissionNum,
-            "month" : months[currMonth].name,
+            "month" : months[monthIndex].name,
             "totalFees" : totalFee,
             "feeDetails" : feeDetails,
         }
         await dispatch(payStudentFees(formData))
-        let pdfData = {...formData, ...feeDetails}
-        delete pdfData['date']
-        pdfData['paymentDate'] = date
-        generatePdf(pdfData, storeData)
+        
     }
     toggleModal()
   }
@@ -108,7 +103,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
             <span className="month">{months[currMonth].name}</span>    
         </ModalHeader>
         <ModalBody>
-            <Form onSubmit={onSubmit}>
+            <Form>
                 <Row>
                     <Col lg={2}>Date</Col>
                     <Col lg={5}><Input type="date" value={date} onChange={e=>setDate(e.target.value)}/></Col>
@@ -146,8 +141,8 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
 
                     </Col>
                 </Row>
-                <button className="btn-group save">Save</button>
-                <button className="btn-group cancel mr-2" onClick={toggleModal}>Cancel</button>
+                <button type="button" className="btn-group save" onClick={onSubmit}>Save</button>
+                <button type="button" className="btn-group cancel mr-2" onClick={toggleModal}>Cancel</button>
             </Form>           
         </ModalBody>
     </Modal>

@@ -12,7 +12,8 @@ export const generatePdf = (student, schoolData) => {
     doc.text('Mob: +'+schoolData.contactNum+', 9990599024', 145, 35)
     doc.text('Email: '+schoolData.email, 145, 40)
 
-    doc.text('Date: '+setDate(student), 160, 60)
+    doc.text('Date: '+setDate(student), 160, 50)
+    doc.text(`Admission No. #....${student.admissionNum}............ `+ 80, 60)
 
     doc.text(`Name ................... ${'Anjali'} ............................................... S/o/D/o .................${'Mahesh'}.........................................`, 20, 80)
     doc.text(`Fee for the month or quarter of .................................. ${student.month} ............................................................`, 20, 90)
@@ -31,6 +32,7 @@ export const generatePdf = (student, schoolData) => {
     tableRows.push(['Uniform', student.uniform])
     tableRows.push(['Books & Bag', student.bookNbag])
     tableRows.push(['Day Care', student.dayCare])
+    tableRows.push(['Total Fees', student.totalFees])
     doc.autoTable(tableColumn, tableRows, { startY: 110 })
 
     doc.text(`Received Amount Rs.....................${convertToWords(student.totalFees)}......................................................................`, 15, 220)
