@@ -46,7 +46,7 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
   } 
 
   const isValid = () => {
-     if(studentName && admissionNo && studentClass && month && parentName && email && contactNum && address){
+     if(studentName && admissionNo && studentClass && parentName){
          return true
      }
      return false
