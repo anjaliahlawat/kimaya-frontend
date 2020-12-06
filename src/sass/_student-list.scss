@@ -9,7 +9,11 @@
       padding: 5px 10px;
       margin-left: 10px;
       overflow-y: auto;
-      height: 76vh;
+      max-height: 76vh;
+
+      .student-header{
+            height : 55px;
+      }
 
       a{
          width: 100%;

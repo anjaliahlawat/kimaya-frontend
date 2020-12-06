@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Modal, ModalHeader, ModalBody, Input, FormGroup, Col } from "reactstrap";
 import Select from '../../common/Select'
@@ -6,7 +6,7 @@ import {addStudent} from '../../../store/studentList';
 
 const months = require('../../../assets/months.json')
 
-function StudentModal({isModalOpen, toggleModal}){
+function StudentModal({isModalOpen, toggleModal, srNo}){
   const [studentName, setName] = useState('')
   const [admissionNo, setAdmissionNo] = useState('')
   const [studentClass, setClass] = useState('')
@@ -16,6 +16,16 @@ function StudentModal({isModalOpen, toggleModal}){
   const [contactNum, setContactNum] = useState(0)
   const [address, setAddress] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(()=> {
+        setAdmissionNoFn()
+  }, [])
+  
+  const setAdmissionNoFn = () => {
+        let d1 = new Date()
+        let str = ""+d1.getFullYear()+d1.getMonth()+srNo
+        setAdmissionNo(str)
+  }
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -51,6 +61,7 @@ function StudentModal({isModalOpen, toggleModal}){
         <ModalBody>
             <Form onSubmit={onSubmit}>
                <h5>Student Details</h5>
+                <p>Admission No. : {admissionNo}</p>
                 <FormGroup row>
                     <Col lg={6} className="offset-lg-3">
                         <Input 
@@ -59,17 +70,6 @@ function StudentModal({isModalOpen, toggleModal}){
                             placeholder={'Name'} 
                             value={studentName} 
                             onChange={(e) => setName(e.target.value)}
-                        />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Col lg={6} className="offset-lg-3">
-                        <Input 
-                            type="text" 
-                            className="modal-field" 
-                            placeholder={'Admission No.'}
-                            value={admissionNo} 
-                            onChange={(e) => setAdmissionNo(e.target.value)}
                         />
                     </Col>
                 </FormGroup>

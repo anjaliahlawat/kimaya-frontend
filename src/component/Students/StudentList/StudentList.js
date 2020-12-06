@@ -32,8 +32,10 @@ function StudentList(props){
 
   const getPagedData = () => {
     let filtered = []
+    console.log(searchedValue)
     if(searchedValue){
-        filtered = students.filter(item => item['name'].toLowerCase().includes(searchedValue.toLowerCase()) ||  item['admissionNo'].toLowerCase().includes(searchedValue.toLowerCase()))       
+        filtered = students.filter(item => item['name'].toLowerCase().includes(searchedValue.toLowerCase()) ||  item['admissionNum'].toLowerCase().includes(searchedValue.toLowerCase()))  
+        console.log(filtered)     
     }
     else
         filtered = [...students]
@@ -43,7 +45,7 @@ function StudentList(props){
   }
 
   const handleSearch = (e) => {
-      const {value} = e.target.value
+      const {value} = e.target
       setSearchedValue(value)
   }
 
@@ -70,7 +72,7 @@ function StudentList(props){
   return (
     <div className="container-fluid student-list">
         <button className="add-student" type="button" onClick={toggleModal}>
-            Add Student
+            + Add Student
         </button>
         <Header title={"Student List"} />
         <div className="row body-row1">
@@ -133,6 +135,7 @@ function StudentList(props){
         <StudentModal 
             isModalOpen={isModalOpen} 
             toggleModal={toggleModal}
+            srNo={students.length+1}
         />
     </div>
   );

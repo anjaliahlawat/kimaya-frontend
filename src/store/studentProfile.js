@@ -33,10 +33,9 @@ const slice = createSlice({
         }
       },
       feePaid : (studentProfile, action) => {
-          const {result, studentData, schoolData, pdfData} = action.payload
+          const {result, studentData} = action.payload
           if(result === 'success'){
               studentProfile.profileData = {...studentData}
-              generatePdf(pdfData, schoolData)
           }          
       }
   }

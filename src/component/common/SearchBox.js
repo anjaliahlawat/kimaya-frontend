@@ -1,10 +1,12 @@
 import React from 'react';
+import { Input } from 'reactstrap';
 
 function SearchBox({value, handleSearch}){
+  console.log(value)
   return (
       <div className="search-variant form-group has-search">
           <span className="fa fa-search form-control-feedback"></span>
-          <input 
+          <Input 
               className="form-control searchbar" 
               type="text" 
               placeholder="Search" 

@@ -1,0 +1,26 @@
+.modal{
+  .modal-content{
+    .modal-title{
+       width : 100%;
+        h5{
+          font-size: 18px;
+          color : $link-color;
+        }
+    }
+
+    .modal-body{
+       form{
+          .date{
+             text-align: center;
+          }
+          .form-body{
+            margin-top: 20px;
+          }
+          .mode{
+            text-align: right;
+            margin-top: 20px;
+          }
+       }
+    }
+  }
+}

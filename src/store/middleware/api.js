@@ -13,7 +13,7 @@ const api = ({dispatch}) => next => async action => {
 
     try{
         const response = await axios.request({
-        baseURL: process.env.KIMAYA_APP_API_URL,
+        baseURL: 'http://localhost:4000/api',
         url,
         method,
         data

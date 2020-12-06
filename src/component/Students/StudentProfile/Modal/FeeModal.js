@@ -9,7 +9,7 @@ import { getSettings, loadSettings } from '../../../../store/settings';
 
 const months = require('../../../../assets/months.json')
 
-function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
+function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentData, parentData}){
   const [date, setDate] = useState()
   const [modeOfPayment, setModeOfPayment] = useState('Online')
   const [totalFee, setTotalFee] = useState()
@@ -26,6 +26,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   const [bookNbag, setBookNbag] = useState()
   const [dayCare, setDayCare] = useState()
   const dispatch = useDispatch()
+  const schoolData = useSelector(getSettings)
 
   const modeArr = [
       {
@@ -43,6 +44,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
   ]
 
   useEffect(() => {
+    dispatch(loadSettings())
   }, [])
 
   const onSubmit = async ()=> {
@@ -72,10 +74,25 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
             "totalFees" : totalFee,
             "feeDetails" : feeDetails,
         }
-        await dispatch(payStudentFees(formData))
-        
+        try {
+            await dispatch(payStudentFees(formData))
+            setPdfData(feeDetails, formData)
+        }
+        catch(ex){
+            console.log(ex)
+        }
     }
     toggleModal()
+  }
+
+  const setPdfData = (feeDetails, formData)=> {
+    let pdfData= {...feeDetails, ...formData}
+    delete pdfData.feeDetails
+    let name = studentData.filter(item => item.field === 'name')
+    let parentName = parentData.filter(item => item.field === 'name')
+    pdfData['studentName']= name[0].value
+    pdfData['parentName']= parentName[0].value
+    generatePdf(pdfData, schoolData, admissionNum)
   }
 
   const isValid = () => {
@@ -99,16 +116,16 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
     <Modal className="student-modal" isOpen={isModalOpen} toggle={toggleModal} 
         size="md" aria-labelledby="contained-modal-title-vcenter" centered>
         <ModalHeader>
-            Fee Payment
-            <span className="month">{months[currMonth].name}</span>    
+            <h5>Fee Payment   
+            </h5>
         </ModalHeader>
         <ModalBody>
             <Form>
                 <Row>
-                    <Col lg={2}>Date</Col>
+                    <Col lg={5} className="date">Date</Col>
                     <Col lg={5}><Input type="date" value={date} onChange={e=>setDate(e.target.value)}/></Col>
                 </Row>
-                <Row>
+                <Row className="form-body">
                     <Col lg={5}>
                         <InputBox name='registrationFee' value={registrationFee} onChange={setRegistrationFee} label={'Registration Fee'}/>
                         <InputBox name='admissionFee' value={admissionFee} onChange={setAdmissionFee}
@@ -128,10 +145,10 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum}){
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={4}>
+                    <Col lg={5} className="mode">
                         Mode of Payment
                     </Col>
-                    <Col lg={4}>
+                    <Col lg={5} className="mode">
                         <Select 
                             name={'modeOfPayment'} 
                             label={""} 

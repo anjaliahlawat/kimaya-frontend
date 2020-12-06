@@ -4,7 +4,7 @@ import { generatePdf } from '../../../common-functions/generatePdf';
 import { getSettings, loadSettings } from '../../../store/settings';
 import FeeModal from './Modal/FeeModal';
 
-function FeePayments({data, admissionNum}){
+function FeePayments({data, admissionNum, studentData, parentData}){
   const currMonth = new Date().getMonth()
   const currYear = new Date().getFullYear()
   const [isModalOpen, setModal] = useState(false)
@@ -22,6 +22,16 @@ function FeePayments({data, admissionNum}){
   const setDate = (val) => {
      let d1 = new Date(val.paymentDate)
      return val.month +" "+ d1.getDate() + ", " + d1.getFullYear()
+  }
+
+  const setPdfData = (item, storeData, admissionNum) => {
+    let pdfData = {}
+    let name = studentData.filter(item => item.field === 'name')
+    let parentName = parentData.filter(item => item.field === 'name')
+    pdfData['studentName']= name[0].value
+    pdfData['parentName']= parentName[0].value
+    pdfData = {...pdfData, ...item}
+    generatePdf(pdfData, storeData, admissionNum)
   }
 
   return (
@@ -47,7 +57,7 @@ function FeePayments({data, admissionNum}){
                     <div className="p-2">{setDate(item)}</div>
                     <div className="p-2">{item.modeOfPayment}</div>
                     <div className="p-2">{item.status}</div>
-                    <div className="p-2 last" onClick={() =>generatePdf(item, storeData)}>Generate Receipt</div>
+                    <div className="p-2 last" onClick={() =>setPdfData(item, storeData, admissionNum)}>Generate Receipt</div>
                  </div>
                )
             })}
@@ -57,6 +67,8 @@ function FeePayments({data, admissionNum}){
             toggleModal={toggleModal}
             currMonth={currMonth}
             admissionNum={admissionNum}
+            studentData={studentData}
+            parentData={parentData}
         />
     </div>
   );

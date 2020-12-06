@@ -30,7 +30,12 @@ function StudentBody({data, admissionNum}) {
                 />
             </Tab>
             <Tab eventKey="feePayments" title="Fee Payments">
-                <FeePayments data={studentData.feePayments} admissionNum={admissionNum}/>
+                <FeePayments 
+                    data={studentData.feePayments} 
+                    admissionNum={admissionNum}
+                    studentData={studentData.studentDetails}
+                    parentData={studentData.parentDetails}
+                />
             </Tab>
         </Tabs>
   );

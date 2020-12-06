@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-export const generatePdf = (student, schoolData) => {
+export const generatePdf = (student, schoolData, admissionNum) => {
     const doc = new jsPDF()
     
     doc.addImage(getDataUrl(), 'PNG', 10, 10, 45, 40)
@@ -13,9 +13,9 @@ export const generatePdf = (student, schoolData) => {
     doc.text('Email: '+schoolData.email, 145, 40)
 
     doc.text('Date: '+setDate(student), 160, 50)
-    doc.text(`Admission No. #....${student.admissionNum}............ `+ 80, 60)
+    doc.text(`Admission No. #....${admissionNum}............ `,80, 60)
 
-    doc.text(`Name ................... ${'Anjali'} ............................................... S/o/D/o .................${'Mahesh'}.........................................`, 20, 80)
+    doc.text(`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}.........................................`, 20, 80)
     doc.text(`Fee for the month or quarter of .................................. ${student.month} ............................................................`, 20, 90)
 
     const tableColumn = ["Particulars", "Amount"]
