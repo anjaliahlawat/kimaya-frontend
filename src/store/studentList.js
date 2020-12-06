@@ -27,7 +27,6 @@ const slice = createSlice({
         const {result, data} = action.payload
         if(result === 'success'){
            studentLists.list = [...studentLists.list,{ ...data}]
-           window.location='/students'
         }
      },
      studentsDeleted : (studentLists, action) => {

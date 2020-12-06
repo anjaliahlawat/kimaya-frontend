@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Form, FormGroup, Col, Input} from 'reactstrap';
-import {login} from '../store/login';
+import {isLoggedIn, isLoggingIn, login} from '../store/login';
 import logo from "../assets/logo.PNG";
+import Loading from './common/Loading';
 
 function Login(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
   const dispatch = useDispatch()
+  let loggingIn = useSelector(isLoggingIn)
+  let loggedIn = useSelector(isLoggedIn)
+
+  useEffect(() => {
+  }, [loggingIn, loggedIn])
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -20,12 +27,17 @@ function Login(props) {
         }
         try{
           await dispatch(login(formData))
+          if(!loggedIn)
+            setError(true)
         }
         catch(ex){
-           
+            console.log(ex)
         }
     }    
   }
+
+  if(loggingIn)
+      return(<Loading message={'Logging In'}/>)
 
   return (
     <div className="login">
@@ -34,6 +46,7 @@ function Login(props) {
       </div>
       
       <Form onSubmit={onSubmit}>
+            {error && <p className="error">Invalid Credentials</p>}
             <FormGroup row>
                 <Col lg={6} className="offset-lg-3">
                     <Input 

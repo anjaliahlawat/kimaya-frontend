@@ -23,7 +23,7 @@ function StudentList(props){
 
   useEffect(() => {
     dispatch(loadStudents(month))
-  }, [month, year])
+  }, [month, year, students])
 
   const toggleModal = (e) => {
     e.preventDefault()

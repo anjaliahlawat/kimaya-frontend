@@ -19,7 +19,7 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
 
   useEffect(()=> {
         setAdmissionNoFn()
-  }, [])
+  }, [srNo])
   
   const setAdmissionNoFn = () => {
         let d1 = new Date()

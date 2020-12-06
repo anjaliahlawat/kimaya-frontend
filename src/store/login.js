@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan} from './api'
 import { setUser, clearOut } from "../services/authService";
 
@@ -17,13 +17,15 @@ const slice = createSlice({
     login_success: (authentication, action) => {
         const {result, user} = action.payload
         if(result === 'success'){
-            authentication.loggedIn = true
-            authentication.user= user
             setUser(user)
+            authentication.loggedIn = true
+            authentication.loggingIn = false
+            authentication.user= user
             window.location = '/students'
         }
         else{
           authentication.loggedIn = false
+          authentication.loggingIn = false
           authentication.user= {}
         }
     },
@@ -58,3 +60,13 @@ export const login = user => apiCallBegan({
     onSuccess: login_success.type,
     onError: login_failed.type
 })
+
+export const isLoggingIn =createSelector(
+  state => state.entities.authentication,
+  authentication => authentication.loggingIn
+);
+
+export const isLoggedIn =createSelector(
+  state => state.entities.authentication,
+  authentication => authentication.loggedIn
+);
