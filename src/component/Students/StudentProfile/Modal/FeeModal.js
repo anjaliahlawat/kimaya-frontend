@@ -83,6 +83,25 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
         }
     }
     toggleModal()
+    emptyState()
+  }
+
+  const emptyState = () => {
+        setDate('')
+        setModeOfPayment('')
+        setTotalFee('')
+        setRegistrationFee()
+        setAdmissionFee()
+        setAnnualCharges()
+        setActivityCharges()
+        setDevelopmentCharges()
+        setDayCare()
+        setTuitionFee()
+        setBookNbag()
+        setMeal()
+        setUniform()
+        setMisc()
+        setTransport()
   }
 
   const setPdfData = (feeDetails, formData)=> {

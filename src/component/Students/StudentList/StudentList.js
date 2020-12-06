@@ -4,10 +4,11 @@ import Pagination from '../../common/Pagination';
 import StudentModal from './StudentModal';
 import { paginate } from '../../../common-functions/paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadStudents, getAllStudents } from '../../../store/studentList';
+import { loadStudents, getAllStudents, isLoading, gotError } from '../../../store/studentList';
 import { Link } from 'react-router-dom';
 import Header from '../../common/Header';
 import Calender from '../../common/Calender';
+import Loading from '../../common/Loading';
 
 const months = require('../../../assets/months.json')
 
@@ -20,13 +21,15 @@ function StudentList(props){
   const [month, setMonth] = useState(months[(new Date()).getMonth()].name)
   const [year, setYear] = useState(new Date().getFullYear())
   const dispatch = useDispatch()
+  let loading = useSelector(isLoading)
+  let error = useSelector(gotError)
 
   useEffect(() => {
+    console.log(students)
     dispatch(loadStudents(month))
   }, [month, year, students])
 
-  const toggleModal = (e) => {
-    e.preventDefault()
+  const toggleModal = () => {
     setModal(!isModalOpen)
   }
 
@@ -68,6 +71,12 @@ function StudentList(props){
   }
 
   const { totalCount, data : arr} = getPagedData()
+
+  if(loading)
+    return(<Loading message={'Loading students'}/>)
+
+  if(error)
+    return (<h5>Server Error</h5>)
 
   return (
     <div className="container-fluid student-list">

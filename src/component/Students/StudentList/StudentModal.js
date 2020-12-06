@@ -27,8 +27,8 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
         setAdmissionNo(str)
   }
 
-  const onSubmit = async (event) => {
-    event.preventDefault()
+  const onSubmit = async () => {
+    toggleModal()
     if(isValid()){
         const formData = {
           "studentName" : studentName,
@@ -40,10 +40,20 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
           "contactNum" : contactNum,
           "address" : address,
         }
-        console.log(formData)
-        await dispatch(addStudent(formData))
+        await dispatch(addStudent(formData, month))  
+        emptyData()     
     }
   } 
+
+  const emptyData=()=> {
+      setName('')
+      setClass('')
+      setMonth('')
+      setParentName('')
+      setEmail('')
+      setContactNum(0)
+      setAddress('')
+  }
 
   const isValid = () => {
      if(studentName && admissionNo && studentClass && parentName){
@@ -59,7 +69,7 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
                 New Student
         </ModalHeader>
         <ModalBody>
-            <Form onSubmit={onSubmit}>
+            <Form>
                <h5>Student Details</h5>
                 <p>Admission No. : {admissionNo}</p>
                 <FormGroup row>
@@ -140,8 +150,8 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
                     </Col>
                 </FormGroup>
                 
-                <button className="btn-group save">Save</button>
-                <button className="btn-group cancel mr-2" onClick={toggleModal}>Cancel</button>
+                <button type="button" className="btn-group save" onClick={onSubmit}>Save</button>
+                <button type="button" className="btn-group cancel mr-2" onClick={toggleModal}>Cancel</button>
             </Form>           
         </ModalBody>
     </Modal>
