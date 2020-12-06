@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan} from './api'
 import { setUser } from "../services/authService";
 
@@ -6,27 +6,30 @@ const slice = createSlice({
   name: 'register',
   initialState: {
     user: {},
-    registering: false
+    loading: false,
+    error : false
   },
   reducers: {
     register_request: (register, action) => {
-      register.registering = true
+      register.loading = true
     },
     register_success: (register, action) => {
       const {result, user} = action.payload
         if(result === 'success'){
-          register.registering = ''
+          register.loading = false
           register.user= user
           setUser(user)          
           window.location = '/students'
         }
         else{
-          register.registering = false
+          register.loading = false
+          register.error = true
           register.user= {}
         }
     },
     register_failed : (register, action) => {
-        register.registering = false
+        register.loading = false
+        register.error = true
         register.user= {}
     }
   }
@@ -50,3 +53,13 @@ export const register = user => apiCallBegan({
   onSuccess: register_success.type,
   onError: register_failed.type
 })
+
+export const isLoading =createSelector(
+  state => state.entities.register,
+  register => register.loading
+);
+
+export const gotError =createSelector(
+  state => state.entities.register,
+  register => register.error
+);

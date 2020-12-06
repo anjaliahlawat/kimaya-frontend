@@ -3,20 +3,19 @@ import { Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Form, FormGroup, Col, Input} from 'reactstrap';
-import {isLoggedIn, isLoggingIn, login} from '../store/login';
+import {gotError, isLoggingIn, login} from '../store/login';
 import logo from "../assets/logo.PNG";
 import Loading from './common/Loading';
 
 function Login(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
   const dispatch = useDispatch()
   let loggingIn = useSelector(isLoggingIn)
-  let loggedIn = useSelector(isLoggedIn)
+  let error = useSelector(gotError)
 
   useEffect(() => {
-  }, [loggingIn, loggedIn])
+  }, [loggingIn, error])
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -27,8 +26,6 @@ function Login(props) {
         }
         try{
           await dispatch(login(formData))
-          if(!loggedIn)
-            setError(true)
         }
         catch(ex){
             console.log(ex)

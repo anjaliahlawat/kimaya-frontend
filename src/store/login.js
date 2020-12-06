@@ -7,7 +7,8 @@ const slice = createSlice({
   initialState: {
     user: {},
     loggingIn: false,
-    loggedIn: false
+    loggedIn: false,
+    error : false
   },
   reducers: {
     login_request: (authentication, action) => {
@@ -20,18 +21,21 @@ const slice = createSlice({
             setUser(user)
             authentication.loggedIn = true
             authentication.loggingIn = false
+            authentication.error = false
             authentication.user= user
             window.location = '/students'
         }
         else{
           authentication.loggedIn = false
           authentication.loggingIn = false
+          authentication.error = true
           authentication.user= {}
         }
     },
     login_failed : (authentication, action) => {
         authentication.loggingIn = false
         authentication.loggedIn = false
+        authentication.error = false
         authentication.user= {}
     },
     logout : (authentication, action)=> {
@@ -66,7 +70,7 @@ export const isLoggingIn =createSelector(
   authentication => authentication.loggingIn
 );
 
-export const isLoggedIn =createSelector(
+export const gotError =createSelector(
   state => state.entities.authentication,
-  authentication => authentication.loggedIn
+  authentication => authentication.error
 );
