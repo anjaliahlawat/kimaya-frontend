@@ -18,7 +18,12 @@ function Login(props) {
           'email' : email,
           'password' : password
         }
-        await dispatch(login(formData))
+        try{
+          await dispatch(login(formData))
+        }
+        catch(ex){
+           
+        }
     }    
   }
 

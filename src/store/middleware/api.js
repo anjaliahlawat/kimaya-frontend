@@ -13,7 +13,7 @@ const api = ({dispatch}) => next => async action => {
 
     try{
         const response = await axios.request({
-        baseURL: 'http://localhost:4000/api',
+        baseURL: 'https://kimaya-school-app.herokuapp.com/api',
         url,
         method,
         data
