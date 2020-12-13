@@ -110,7 +110,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
   const setReferenceNo = () => {
     let payDate = new Date(date)
     let referenceNo = payDate.getFullYear() + payDate.getMonth()+ admissionNum + Math.floor((Math.random() * 100) + 1)
-    return referenceNo
+    return 'KIM'+referenceNo
   }
 
   const setPdfData = (feeDetails, formData)=> {

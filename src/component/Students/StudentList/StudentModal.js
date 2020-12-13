@@ -32,7 +32,7 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
     if(isValid()){
         const formData = {
           "studentName" : studentName,
-          "admissionNo" : admissionNo,
+          "admissionNo" : 'KIM'+admissionNo,
           "studentClass" : studentClass,
           "month" : month,
           "parentName" : parentName,
