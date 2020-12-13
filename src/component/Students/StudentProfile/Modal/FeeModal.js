@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { payStudentFees } from '../../../../store/studentProfile';
 import { generatePdf } from '../../../../common-functions/generatePdf';
 import { getSettings, loadSettings } from '../../../../store/settings';
+import { toastify } from '../../../../common-functions/notify';
 
 const months = require('../../../../assets/months.json')
 
@@ -47,9 +48,8 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
     dispatch(loadSettings())
   }, [])
 
+
   const onSubmit = async ()=> {
-    const totalFee = calculateFee()
-    setTotalFee(totalFee)
     const feeDetails = {
         registrationFee : registrationFee,
         admissionFee : admissionFee,
@@ -67,28 +67,31 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
     if(isValid()){
         let monthIndex = new Date(date).getMonth()
         const formData = {
+            "referenceNo" : setReferenceNo(),
             "modeOfPayment" : modeOfPayment,
             "date" : date,
             "admissionNum" : admissionNum,
             "month" : months[monthIndex].name,
-            "totalFees" : totalFee,
+            "totalFees" : calculateFee(),
             "feeDetails" : feeDetails,
         }
         try {
             await dispatch(payStudentFees(formData))
             setPdfData(feeDetails, formData)
+            toggleModal()
+            emptyState()
         }
         catch(ex){
             console.log(ex)
         }
     }
-    toggleModal()
-    emptyState()
+    else
+        toastify('error', 'One or more fields are left empty.')
+    
   }
 
   const emptyState = () => {
         setDate('')
-        setModeOfPayment('')
         setTotalFee('')
         setRegistrationFee()
         setAdmissionFee()
@@ -104,6 +107,12 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
         setTransport()
   }
 
+  const setReferenceNo = () => {
+    let payDate = new Date(date)
+    let referenceNo = payDate.getFullYear() + payDate.getMonth()+ admissionNum + Math.floor((Math.random() * 100) + 1)
+    return referenceNo
+  }
+
   const setPdfData = (feeDetails, formData)=> {
     let pdfData= {...feeDetails, ...formData}
     delete pdfData.feeDetails
@@ -111,17 +120,20 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
     let parentName = parentData.filter(item => item.field === 'name')
     pdfData['studentName']= name[0].value
     pdfData['parentName']= parentName[0].value
+    pdfData['referenceNo']= formData.referenceNo
+    pdfData['paymentDate']= date
     generatePdf(pdfData, schoolData, admissionNum)
   }
 
   const isValid = () => {
-      if(modeOfPayment !== '' && date !== '' && totalFee !== 0)
+      if(modeOfPayment !== '' && date !== '' && calculateFee() !== 0)
          return true
       return false
   }
 
   const calculateFee = () => {
       let sum = checkValue(registrationFee) + checkValue(admissionFee) + checkValue(developmentCharges) + checkValue(annualCharges) + checkValue(tuitionFee) + checkValue(activityCharges) + checkValue(meal) + checkValue(transport) + checkValue(misc) + checkValue(uniform) + checkValue(bookNbag) + checkValue(dayCare)
+      setTotalFee(sum)
       return sum
   }
 

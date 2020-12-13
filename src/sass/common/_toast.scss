@@ -1,0 +1,21 @@
+.Toastify__toast--success{
+  background: white !important;
+  .Toastify__toast-body{
+    color: $green-color !important;
+    font-weight: 600 !important;
+  }
+}
+.Toastify__toast--info{
+ background: white !important;
+ .Toastify__toast-body{
+   color: $link-color !important;
+   font-weight: 600 !important;
+ }
+}
+.Toastify__toast--error{
+ background: white !important;
+ .Toastify__toast-body{
+   color: $red-color !important;
+   font-weight: 600 !important;
+ }
+}
