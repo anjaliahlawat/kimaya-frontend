@@ -5,7 +5,7 @@ export const generatePdf = (student, schoolData, admissionNum) => {
   console.log(student)
   const doc = new jsPDF()
 
-  doc.addImage(getDataUrl(), 'PNG', 10, 10, 45, 40)
+  doc.addImage(getDataUrl(), 'PNG', 10, 15, 45, 40)
   doc.setFontSize(10)
   doc.text(schoolData.name, 145, 20)
   doc.text(schoolData.address, 145, 25)
@@ -14,11 +14,26 @@ export const generatePdf = (student, schoolData, admissionNum) => {
   doc.text('Email: ' + schoolData.email, 145, 40)
 
   doc.text('Date: ' + setDate(student), 160, 50)
-  doc.text(`Admission No. #....${admissionNum}....... `, 20, 60)
-  doc.text(`Reference No. #....${student.referenceNo}....... `, 120, 60)
+  doc.text(`Admission No. #....${admissionNum}....... `, 15, 65)
+  doc.text(`Reference No. #....${student.referenceNo}`, 135, 65)
 
-  doc.text(`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}.........................................`, 20, 80)
-  doc.text(`Fee for the month or quarter of .................................. ${student.month} ............................................................`, 20, 90)
+  const tableRows0 = []
+  tableRows0.push([`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}................................`])
+  tableRows0.push([`Fee for the month or quarter of .................................. ${student.month} .......................................................................`])
+
+  doc.autoTable([[]], tableRows0, {
+    startY: 80,
+    theme: 'plain',
+    styles: {
+      cellPadding: 2,
+      tableWidth : 100,
+    },
+  },
+)
+
+
+  // doc.text(`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}.........................................`, 15, 80)
+  // doc.text(`Fee for the month or quarter of .................................. ${student.month} ............................................................`, 15, 90)
 
   const tableColumn = ["Particulars", "Amount"]
   const tableRows = []
@@ -36,12 +51,25 @@ export const generatePdf = (student, schoolData, admissionNum) => {
   tableRows.push(['Day Care', student.dayCare])
   tableRows.push(['Total Fees', student.totalFees])
   doc.autoTable(tableColumn, tableRows, {
-    startY: 110
+    startY: 105
   })
 
-  doc.text(`Received Amount Rs.....................${convertToWords(student.totalFees)}......................................................................`, 15, 220)
+  let finalY = doc.previousAutoTable.finalY
 
-  doc.text(`Mode of Payment (Online/Cheque/Cash)...................${student.modeOfPayment}...................................................................`, 15, 230)
+  let tableRows2 = []
+
+  tableRows2.push([`Received Amount Rs..................................................${convertToWords(student.totalFees)}..........................................................`])
+  tableRows2.push([`Mode of Payment (Online/Cheque/Cash)...................${student.modeOfPayment}................................................................................`])
+
+  doc.autoTable([[]], tableRows2, {
+      startY: finalY+10,
+      theme: 'plain',
+      styles: {
+        cellPadding: 2,
+        cellWidth : 200,
+      },
+    },
+  )
 
   doc.text('Director ', 15, 250)
   doc.text('Dr. Sadhna Chandana ', 15, 255)
