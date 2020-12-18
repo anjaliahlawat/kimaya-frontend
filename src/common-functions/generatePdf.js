@@ -2,7 +2,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 export const generatePdf = (student, schoolData, admissionNum) => {
-  console.log(student)
   const doc = new jsPDF()
 
   doc.addImage(getDataUrl(), 'PNG', 10, 15, 45, 40)
@@ -18,15 +17,21 @@ export const generatePdf = (student, schoolData, admissionNum) => {
   doc.text(`Reference No. #....${student.referenceNo}`, 135, 65)
 
   const tableRows0 = []
-  tableRows0.push([`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}................................`])
-  tableRows0.push([`Fee for the month or quarter of .................................. ${student.month} .......................................................................`])
+  // tableRows0.push([`Name ................... ${student.studentName} ............................................... S/o/D/o .................${student.parentName}................................`])
+  // tableRows0.push([`Fee for the month or quarter of .................................. ${student.month} .......................................................................`])
+  let tableHeader0= ['', '']
+  tableRows0.push([`Name       :       ${student.studentName}`, `S/o/D/o     :      ${student.parentName}`])
+  tableRows0.push([`Fee for the month or quarter of      :     ${student.month}`, `Class      :    Nursery`])
 
-  doc.autoTable([[]], tableRows0, {
-    startY: 80,
+  doc.autoTable(tableHeader0, tableRows0, {
+    startY: 70,
     theme: 'plain',
     styles: {
       cellPadding: 2,
-      tableWidth : 100,
+      cellWidth : 95,
+      tableLineWidth: 0.75,
+      // overflow: 
+      // overflow: 'linebreak' 
     },
   },
 )
