@@ -118,8 +118,10 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
     let pdfData= {...feeDetails, ...formData}
     delete pdfData.feeDetails
     let name = studentData.filter(item => item.field === 'name')
+    let studentClass = studentData.filter(item => item.field === 'class')
     let parentName = parentData.filter(item => item.field === 'name')
     pdfData['studentName']= name[0].value
+    pdfData['class']= studentClass[0].value
     pdfData['parentName']= parentName[0].value
     pdfData['referenceNo']= formData.referenceNo
     pdfData['paymentDate']= date
