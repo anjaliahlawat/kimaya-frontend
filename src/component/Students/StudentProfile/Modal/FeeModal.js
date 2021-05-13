@@ -86,7 +86,7 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
         }
     }
     else
-        toastify('error', 'One or more fields are left empty.')
+        toastify('error',"Error", 'One or more fields are left empty.')
     
   }
 

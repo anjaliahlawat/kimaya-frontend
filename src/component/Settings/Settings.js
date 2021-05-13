@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, FormGroup, Col, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadSettings, getSettings, editSettings } from '../../store/settings';
+import { toastify } from '../../common-functions/notify';
 
 function Settings(props) {
   const [schoolName, setSchoolName] = useState('')
