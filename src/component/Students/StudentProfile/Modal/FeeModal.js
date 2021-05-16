@@ -13,7 +13,6 @@ const months = require('../../../../assets/months.json')
 function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentData, parentData}){
   const [date, setDate] = useState()
   const [modeOfPayment, setModeOfPayment] = useState('Online')
-  const [totalFee, setTotalFee] = useState()
   const [registrationFee, setRegistrationFee] = useState()
   const [admissionFee, setAdmissionFee] = useState()
   const [developmentCharges, setDevelopmentCharges] = useState()
@@ -92,7 +91,6 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
 
   const emptyState = () => {
         setDate('')
-        setTotalFee('')
         setRegistrationFee()
         setAdmissionFee()
         setAnnualCharges()
@@ -117,12 +115,10 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
   const setPdfData = (feeDetails, formData)=> {
     let pdfData= {...feeDetails, ...formData}
     delete pdfData.feeDetails
-    let name = studentData.filter(item => item.field === 'name')
-    let studentClass = studentData.filter(item => item.field === 'class')
-    let parentName = parentData.filter(item => item.field === 'name')
-    pdfData['studentName']= name[0].value
-    pdfData['class']= studentClass[0].value
-    pdfData['parentName']= parentName[0].value
+   
+    pdfData['studentName']= studentData.name
+    pdfData['class']= studentData.class
+    pdfData['parentName']= parentData.name
     pdfData['referenceNo']= formData.referenceNo
     pdfData['paymentDate']= date
     generatePdf(pdfData, schoolData, admissionNum)
@@ -136,7 +132,6 @@ function FeeModal({isModalOpen, toggleModal, currMonth, admissionNum, studentDat
 
   const calculateFee = () => {
       let sum = checkValue(registrationFee) + checkValue(admissionFee) + checkValue(developmentCharges) + checkValue(annualCharges) + checkValue(tuitionFee) + checkValue(activityCharges) + checkValue(meal) + checkValue(transport) + checkValue(misc) + checkValue(uniform) + checkValue(bookNbag) + checkValue(dayCare)
-      setTotalFee(sum)
       return sum
   }
 

@@ -26,8 +26,8 @@ const api = ({
 
     try {
         const response = await axios.request({
-            baseURL: 'https://kimaya-school-app.herokuapp.com/api',
-            // baseURL: 'http://localhost:4000/api',
+            // baseURL: 'https://kimaya-school-app.herokuapp.com/api',
+            baseURL: 'http://localhost:4000/api',
             url,
             method,
             data

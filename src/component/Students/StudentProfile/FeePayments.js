@@ -25,12 +25,9 @@ function FeePayments({data, admissionNum, studentData, parentData}) {
 
   const setPdfData = (item, storeData, admissionNum) => {
     let pdfData = {}
-    let name = studentData.filter(item => item.field === 'name')
-    let parentName = parentData.filter(item => item.field === 'name')
-    let studentClass = studentData.filter(item => item.field === 'class')
-    pdfData['studentName'] = name[0].value
-    pdfData['parentName'] = parentName[0].value
-    pdfData['class']= studentClass[0].value
+    pdfData['studentName'] = studentData.name
+    pdfData['parentName'] = parentData.name
+    pdfData['class']= studentData.class
     pdfData = {
       ...pdfData,
       ...item
