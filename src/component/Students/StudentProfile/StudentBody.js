@@ -9,14 +9,8 @@ function StudentBody({data, admissionNum}) {
 
   useEffect(() => {
     setStudentData({...data})
+    console.log(data)
   }, [data])
-
-  const handleChange = (obj, index) => {
-     let temp_obj = {...studentData}
-     console.log(temp_obj['studentDetails'][index].value)
-     temp_obj['studentDetails'][index].value = obj.value
-     setStudentData(temp_obj)
-  }
 
   if(Object.keys(studentData).length === 0)
     return null
@@ -27,7 +21,6 @@ function StudentBody({data, admissionNum}) {
                     data={studentData.studentDetails} 
                     parentData={studentData.parentDetails} 
                     admissionNum={admissionNum}
-                    onEdit={handleChange}
                 />
             </Tab>
             <Tab eventKey="feePayments" title="Fee Payments">

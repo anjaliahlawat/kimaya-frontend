@@ -1,5 +1,6 @@
 import React from 'react';
-import EditForm from './Forms/Form';
+import StudentEditForm from './Forms/StudentEditForm';
+import ParentEditForm from './Forms/ParentEditForm';
 
 function StudentDetails({data, parentData, onEdit}) {
   return (
@@ -7,13 +8,13 @@ function StudentDetails({data, parentData, onEdit}) {
         <div className="row student-details_row1">
             <div className="col-12">
                 <h5>Student Info.</h5>
-              <EditForm data={data} onEdit={onEdit}/>
+              <StudentEditForm data={data}/>
             </div>
         </div>
         <div className="row student-details_row2">
             <div className="col-12">
                 <h5>Parent Info.</h5>
-                <EditForm data={parentData} onEdit={onEdit}/>
+                <ParentEditForm data={parentData} onEdit={onEdit}/>
             </div>
         </div>
     </div>

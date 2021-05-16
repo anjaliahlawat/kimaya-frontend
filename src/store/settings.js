@@ -29,7 +29,6 @@ const slice = createSlice({
      settingsEdited : (settings, action) => {
         const {result, data} = action.payload
         if(result === 'success'){
-            console.log(data)
             settings.data ={...data}
         }
      }
