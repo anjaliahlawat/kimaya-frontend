@@ -2,7 +2,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 export const generatePdf = (student, schoolData, admissionNum) => {
-  console.log(student)
   const doc = new jsPDF()
 
   doc.addImage(getDataUrl(), 'PNG', 10, 15, 45, 40)
@@ -80,7 +79,7 @@ export const generatePdf = (student, schoolData, admissionNum) => {
   doc.text('Director ', 15, 250)
   doc.text('Dr. Sadhna Chandana ', 15, 255)
   doc.text(schoolData.name, 15, 260)
-  doc.save('fee-receipt.pdf')
+  doc.save(`${student.studentName}_${student.month}_${getFullYear(student)}_Fee-Receipt`)
 }
 
 function getDataUrl() {
@@ -90,6 +89,10 @@ function getDataUrl() {
 function setDate(val) {
   let d1 = new Date(val.paymentDate)
   return d1.getDate() + " " + val.month + " " + d1.getFullYear()
+}
+
+function getFullYear(val) {
+  return new Date(val.paymentDate).getFullYear()
 }
 
 function convertToWords(num) {

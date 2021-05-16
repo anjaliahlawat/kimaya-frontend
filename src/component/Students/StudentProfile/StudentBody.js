@@ -13,8 +13,9 @@ function StudentBody({data, admissionNum}) {
 
   const handleChange = (obj, index) => {
      let temp_obj = {...studentData}
+     console.log(temp_obj['studentDetails'][index].value)
      temp_obj['studentDetails'][index].value = obj.value
-     setStudentData({...temp_obj})
+     setStudentData(temp_obj)
   }
 
   if(Object.keys(studentData).length === 0)
