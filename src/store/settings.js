@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { apiCallBegan} from './api'
 import moment from 'moment'
+import { toastify } from "../common-functions/notify";
 
 const slice = createSlice({
   name: 'settings',
@@ -30,6 +31,7 @@ const slice = createSlice({
         const {result, data} = action.payload
         if(result === 'success'){
             settings.data ={...data}
+            toastify("success", "Data updated!")
         }
      }
   }

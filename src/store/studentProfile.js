@@ -6,6 +6,7 @@ import {
   apiCallBegan
 } from './api'
 import moment from 'moment'
+import { toastify } from "../common-functions/notify";
 
 const slice = createSlice({
   name: 'studentProfile',
@@ -20,7 +21,6 @@ const slice = createSlice({
     },
     studentDataReceived: (studentProfile, action) => {
       const {result, studentData} = action.payload
-      console.log(studentData.studentDetails[0])
       if (result === 'success') {
         studentProfile.profileData = {...studentData}
         studentProfile.lastFetch = Date.now()
@@ -36,15 +36,17 @@ const slice = createSlice({
         studentData
       } = action.payload
       if (result === 'success') {
-        studentProfile.profileData = {
-          ...studentData
-        }
+        // studentProfile.profileData = {
+        //   ...studentData
+        // }
+        toastify("success", "Data updated!")
       }
     },
     feePaid: (studentProfile, action) => {
       const {result, studentData} = action.payload
       if (result === 'success') {
         studentProfile.profileData = {...studentData}
+        toastify("success", "Fee paid", "You can check the downloaded fee receipt.")
       }
     }
   }
@@ -79,6 +81,13 @@ export const payStudentFees = (data) => apiCallBegan({
   method: 'post',
   data: data,
   onSuccess: feePaid.type
+})
+
+export const editStudentData = studentData => apiCallBegan({
+  url: url + '/edit-student-data',
+  method: 'post',
+  data: studentData,
+  onSuccess: studentDataEdit.type
 })
 
 export const getStudentData = createSelector(

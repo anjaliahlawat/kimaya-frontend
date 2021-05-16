@@ -1,26 +1,14 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
 import { Form, Input, FormGroup, Col, Label } from "reactstrap";
 
-function StudentEditForm({data, onEdit}) {
-  const [studentName, setStudentName] = useState('')
-  const [studentClass, setStudentClass] = useState('')
-  const [month, setMonth] = useState('')
-  const [admissionDate, setAdmissionDate] = useState('')
-  
-  useEffect(() => {
-    setStudentName(data.name)
-    setStudentClass(data.class)
-    setMonth(data.month)
-    setAdmissionDate(formatDate(data.admissionDate))
-  }, [data])
+function StudentEditForm({data, handleDataChange}) {
 
   const formatDate = (d) => {
     const d1 = new Date(d)
     return d1.getDate() + "-" + d1.getMonth() + "-" + d1.getFullYear()
   }
 
-  if(data.length === 0)
+  if(Object.keys(data).length === 0)
       return null
   return (
     <Form className="student-form">
@@ -32,9 +20,9 @@ function StudentEditForm({data, onEdit}) {
                       <Input 
                           type="text" 
                           className="modal-field"
-                          name="studentName"
-                          value={studentName} 
-                          onChange={(e) => setStudentName(e.target.value)}
+                          name="name"
+                          value={data.name} 
+                          onChange={(e) => handleDataChange(e.target, "student")}
                       />
                   </Col>
               </FormGroup>
@@ -46,9 +34,9 @@ function StudentEditForm({data, onEdit}) {
                       <Input 
                           type="text" 
                           className="modal-field"
-                          name="studentClass"
-                          value={studentClass} 
-                          onChange={(e) => setStudentClass(e.target.value)}
+                          name="class"
+                          value={data.class} 
+                          onChange={(e) => handleDataChange(e.target, "student")}
                       />
                   </Col>
               </FormGroup>
@@ -61,7 +49,7 @@ function StudentEditForm({data, onEdit}) {
                           type="text" 
                           className="modal-field"
                           name="month"
-                          value={month} 
+                          value={data.month} 
                           readOnly
                       />
                   </Col>
@@ -75,7 +63,7 @@ function StudentEditForm({data, onEdit}) {
                           type="text" 
                           className="modal-field"
                           name="admissionDate"
-                          value={admissionDate} 
+                          value={formatDate(data.admissionDate)} 
                           readOnly
                       />
                   </Col>

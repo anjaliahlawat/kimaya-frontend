@@ -9,7 +9,6 @@ function StudentBody({data, admissionNum}) {
 
   useEffect(() => {
     setStudentData({...data})
-    console.log(data)
   }, [data])
 
   if(Object.keys(studentData).length === 0)
@@ -19,7 +18,7 @@ function StudentBody({data, admissionNum}) {
             <Tab eventKey="studentDetails" title="Student Details">
                 <StudentDetails 
                     data={studentData.studentDetails} 
-                    parentData={studentData.parentDetails} 
+                    parentDetails={studentData.parentDetails} 
                     admissionNum={admissionNum}
                 />
             </Tab>

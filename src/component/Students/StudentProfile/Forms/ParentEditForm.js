@@ -1,19 +1,7 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
 import { Form, Input, FormGroup, Col, Label } from "reactstrap";
 
-function StudentEditForm({data}) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [contactNum, setContactNum] = useState('')
-  const [address, setAddress] = useState('')
-  
-  useEffect(() => {
-    setName(data.name)
-    setEmail(data.email)
-    setContactNum(data.contactNum)
-    setAddress(data.address)
-  }, [data])
+function ParentEditForm({data, handleDataChange}) {
 
   if(data.length === 0)
       return null
@@ -28,8 +16,8 @@ function StudentEditForm({data}) {
                           type="text" 
                           className="modal-field"
                           name="name"
-                          value={name} 
-                          onChange={(e) => setName(e.target.value)}
+                          value={data.name} 
+                          onChange={(e) => handleDataChange(e.target, "parent")}
                       />
                   </Col>
               </FormGroup>
@@ -42,8 +30,8 @@ function StudentEditForm({data}) {
                           type="text" 
                           className="modal-field"
                           name="email"
-                          value={email} 
-                          onChange={(e) => setEmail(e.target.value)}
+                          value={data.email} 
+                          onChange={(e) => handleDataChange(e.target, "parent")}
                       />
                   </Col>
               </FormGroup>
@@ -56,8 +44,8 @@ function StudentEditForm({data}) {
                           type="text" 
                           className="modal-field"
                           name="contactNum"
-                          value={contactNum} 
-                          onChange={(e) => setContactNum(e.target.value)}
+                          value={data.contactNum} 
+                          onChange={(e) => handleDataChange(e.target, "parent")}
                       />
                   </Col>
               </FormGroup>
@@ -69,9 +57,9 @@ function StudentEditForm({data}) {
                       <Input 
                           type="text" 
                           className="modal-field"
-                          name="admissionDate"
-                          value={address} 
-                          onChange={(e) => setAddress(e.target.value)}
+                          name="address"
+                          value={data.address} 
+                          onChange={(e) => handleDataChange(e.target, "parent")}
                       />
                   </Col>
               </FormGroup>
@@ -79,4 +67,4 @@ function StudentEditForm({data}) {
   );
 }
 
-export default StudentEditForm;
+export default ParentEditForm;

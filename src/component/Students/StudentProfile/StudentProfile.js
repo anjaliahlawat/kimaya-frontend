@@ -10,6 +10,7 @@ function StudentProfile({uin, notify}) {
 
   useEffect(()=> {    
     dispatch(loadStudentData(uin))
+    // console.log(studentData)
   }, [])
 
   if(Object.keys(studentData).length === 0)

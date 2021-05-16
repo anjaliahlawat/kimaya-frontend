@@ -26,8 +26,8 @@ const api = ({
 
     try {
         const response = await axios.request({
-            // baseURL: 'https://kimaya-school-app.herokuapp.com/api',
-            baseURL: 'http://localhost:4000/api',
+            baseURL: 'https://kimaya-school-app.herokuapp.com/api',
+            // baseURL: 'http://localhost:4000/api',
             url,
             method,
             data
@@ -36,10 +36,12 @@ const api = ({
         //General
         dispatch(actions.apiCallSuccess(response.data))
         //specific
-        if (onSuccess) dispatch({
-            type: onSuccess,
-            payload: response.data
-        })
+        if (onSuccess) {
+            dispatch({
+                type: onSuccess,
+                payload: response.data
+            })
+        }
     } catch (e) {
         //general
         dispatch(actions.apiCallFailed(e.message))
