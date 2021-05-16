@@ -6,7 +6,6 @@ import FeeModal from './Modal/FeeModal';
 
 function FeePayments({data, admissionNum, studentData, parentData}) {
   const currMonth = new Date().getMonth()
-  const currYear = new Date().getFullYear()
   const [isModalOpen, setModal] = useState(false)
   const dispatch = useDispatch()
   const storeData = useSelector(getSettings)
@@ -36,7 +35,6 @@ function FeePayments({data, admissionNum, studentData, parentData}) {
       ...pdfData,
       ...item
     }
-    console.log(pdfData)
     generatePdf(pdfData, storeData, admissionNum)
   }
 
