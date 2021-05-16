@@ -51,7 +51,7 @@ function ParentEditForm({data, handleDataChange}) {
               </FormGroup>
               <FormGroup row>
                   <Col lg={4} >
-                      <Label>Admission Date</Label>
+                      <Label>Address</Label>
                   </Col>
                   <Col lg={8}>
                       <Input 
