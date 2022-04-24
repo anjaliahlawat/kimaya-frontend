@@ -13,7 +13,7 @@ import Loading from '../../common/Loading';
 const months = require('../../../assets/months.json')
 
 function StudentList(props){
-  const limit = 20
+  const limit = 100
   let students = useSelector(getAllStudents)
   const [searchedValue, setSearchedValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)

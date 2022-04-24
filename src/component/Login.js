@@ -49,6 +49,7 @@ function Login(props) {
                     <Input 
                         type="email" 
                         className="login-field"
+                        id="#email"
                         placeholder={'Email'} 
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)}
@@ -59,6 +60,7 @@ function Login(props) {
                 <Col lg={6} className="offset-lg-3">
                     <Input 
                         type="password" 
+                        id="#password"
                         className="login-field" 
                         placeholder={'Password'}
                         value={password} 
@@ -67,7 +69,7 @@ function Login(props) {
                 </Col>
             </FormGroup>
             <Col lg={6} className="offset-lg-3">
-                <button>Login</button>
+                <button className="submit-btn">Login</button>
             </Col>
             <Col lg={6} className="footer-text offset-lg-3">
                 <span>Create your account for free.</span>

@@ -77,6 +77,17 @@ function StudentModal({isModalOpen, toggleModal, srNo}){
                         <Input 
                             type="text" 
                             className="modal-field"
+                            placeholder={'Admission No.'} 
+                            value={admissionNo} 
+                            onChange={(e) => setAdmissionNo(e.target.value)}
+                        />
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Col lg={6} className="offset-lg-3">
+                        <Input 
+                            type="text" 
+                            className="modal-field"
                             placeholder={'Name'} 
                             value={studentName} 
                             onChange={(e) => setName(e.target.value)}
